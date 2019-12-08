@@ -11,5 +11,10 @@
         android:label="login_fragment"
         tools:layout="@layout/fragment_login">
     </fragment>
+    <fragment
+        android:id="@+id/signUp2"
+        android:name="com.example.android.digiteen.SignUp"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
 
 </navigation>
