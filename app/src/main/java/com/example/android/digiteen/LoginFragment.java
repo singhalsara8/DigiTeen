@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
         msignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_loginFragment_to_studentSignUp);
+                navController.navigate(R.id.action_loginFragment_to_signUpFragment);
             }
         });
 

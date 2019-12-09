@@ -24,5 +24,10 @@
         android:name="com.example.android.digiteen.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/ownerSignUp"
+        android:name="com.example.android.digiteen.OwnerSignUpFragment"
+        android:label="fragment_owner_sign_up"
+        tools:layout="@layout/fragment_owner_sign_up" />
 
 </navigation>

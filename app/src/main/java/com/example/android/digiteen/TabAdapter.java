@@ -1,36 +1,34 @@
 package com.example.android.digiteen;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TabAdapter extends FragmentStatePagerAdapter {
-    private final List<Fragment> mFragmentList= new ArrayList<>();
-    private final List<String> mFragmentTitleList= new ArrayList<>();
-    TabAdapter(FragmentManager fm)
-    {
-        super(fm);
+public class TabAdapter extends FragmentPagerAdapter {
+    List<Fragment> fragmentList;
+    List<String> title;
+
+    public TabAdapter(FragmentManager fragment, List<Fragment> list, List<String> title) {
+        super(fragment);
+        this.fragmentList = list;
+        this.title= title;
     }
+
     @Override
     public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+        return fragmentList.get(position);
     }
-    public void addFragment(Fragment fragment, String title)
-    {
-        mFragmentList.add(fragment);
-        mFragmentTitleList.add(title);
-    }
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mFragmentTitleList.get(position);
-    }
+
     @Override
     public int getCount() {
-        return mFragmentList.size();
+        return fragmentList.size();
+    }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return title.get(position);
     }
 }
