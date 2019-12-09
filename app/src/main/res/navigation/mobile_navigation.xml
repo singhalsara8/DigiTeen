@@ -10,10 +10,18 @@
         android:name="com.example.android.digiteen.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signUp2"
-        android:name="com.example.android.digiteen.SignUp"
+        android:id="@+id/studentSignUp"
+        android:name="com.example.android.digiteen.StudentSignUpFragment"
+        android:label="fragment_student_sign_up"
+        tools:layout="@layout/fragment_student_sign_up" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.android.digiteen.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
 

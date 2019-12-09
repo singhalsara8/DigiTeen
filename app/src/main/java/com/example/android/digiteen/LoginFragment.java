@@ -4,8 +4,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +23,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class LoginFragment extends Fragment {
     View view;
     private EditText memail, mpassword;
     private Button mloginbtn;
     private TextView msignin;
     private FirebaseAuth fAuth;
-
+    private NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +44,7 @@ public class LoginFragment extends Fragment {
         mloginbtn = view.findViewById(R.id.login_btn);
         msignin = view.findViewById(R.id.signUp);
         fAuth = FirebaseAuth.getInstance();
+        navController = Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
 
         mloginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +75,13 @@ public class LoginFragment extends Fragment {
                 });
             }
         });
-        
+        msignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_loginFragment_to_studentSignUp);
+            }
+        });
+
         return view;
     }
 
