@@ -23,11 +23,20 @@
         android:id="@+id/signUpFragment"
         android:name="com.example.android.digiteen.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_studentLandingFragment"
+            app:destination="@id/studentLandingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ownerSignUp"
         android:name="com.example.android.digiteen.OwnerSignUpFragment"
         android:label="fragment_owner_sign_up"
         tools:layout="@layout/fragment_owner_sign_up" />
+    <fragment
+        android:id="@+id/studentLandingFragment"
+        android:name="com.example.android.digiteen.StudentLandingFragment"
+        android:label="fragment_student_landing"
+        tools:layout="@layout/fragment_student_landing" />
 
 </navigation>
