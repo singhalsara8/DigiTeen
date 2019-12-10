@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_studentLandingFragment"
+            app:destination="@id/studentLandingFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentSignUp"
@@ -37,6 +40,10 @@
         android:id="@+id/studentLandingFragment"
         android:name="com.example.android.digiteen.StudentLandingFragment"
         android:label="fragment_student_landing"
-        tools:layout="@layout/fragment_student_landing" />
+        tools:layout="@layout/fragment_student_landing" >
+        <action
+            android:id="@+id/action_studentLandingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 </navigation>

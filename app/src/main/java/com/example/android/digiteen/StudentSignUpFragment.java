@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -98,10 +99,17 @@ public class StudentSignUpFragment extends Fragment {
                                 usref.child("profile").child("number").setValue(number);
                                 usref.child("profile").child("emailid").setValue(emailid);
                                 usref.child("profile").child("category").setValue("student");
+                                Toast.makeText(getContext(),"Registration successful",Toast.LENGTH_SHORT).show();
+                                NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
+                                navController.navigate(R.id.action_signUpFragment_to_studentLandingFragment, null, navOptions);
+
+                            }
+                            else
+                            {
+                                Toast.makeText(getContext(),"Registration unsuccessful",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                    Toast.makeText(getContext(),"Registration successful",Toast.LENGTH_SHORT).show();
                 }
             }
     });
