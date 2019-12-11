@@ -93,7 +93,7 @@ public class StudentSignUpFragment extends Fragment {
                     mStudentPassword.setError("Password is required");
                 } else {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.setMessage("signing in please wait....");
+                    progressDialog.setMessage("Registering please wait....");
                     progressDialog.show();
                     fauth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override

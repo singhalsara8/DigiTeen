@@ -116,7 +116,7 @@ public class OwnerSignUpFragment extends Fragment {
                 }
                 else {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.setMessage("signing in please wait....");
+                    progressDialog.setMessage("Registering in please wait....");
                     progressDialog.show();
                     fauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
