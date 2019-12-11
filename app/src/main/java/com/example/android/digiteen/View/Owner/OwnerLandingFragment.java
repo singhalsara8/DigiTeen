@@ -1,4 +1,4 @@
-package com.example.android.digiteen;
+package com.example.android.digiteen.View.Owner;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
+import com.example.android.digiteen.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 

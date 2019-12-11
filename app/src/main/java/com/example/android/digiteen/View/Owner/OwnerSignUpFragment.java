@@ -1,4 +1,4 @@
-package com.example.android.digiteen;
+package com.example.android.digiteen.View.Owner;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
+import com.example.android.digiteen.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

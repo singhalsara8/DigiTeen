@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.android.digiteen.LoginFragment"
+        android:name="com.example.android.digiteen.View.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -22,12 +22,12 @@
     </fragment>
     <fragment
         android:id="@+id/studentSignUp"
-        android:name="com.example.android.digiteen.StudentSignUpFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentSignUpFragment"
         android:label="fragment_student_sign_up"
         tools:layout="@layout/fragment_student_sign_up" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.android.digiteen.SignUpFragment"
+        android:name="com.example.android.digiteen.View.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -39,12 +39,12 @@
     </fragment>
     <fragment
         android:id="@+id/ownerSignUp"
-        android:name="com.example.android.digiteen.OwnerSignUpFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerSignUpFragment"
         android:label="fragment_owner_sign_up"
         tools:layout="@layout/fragment_owner_sign_up" />
     <fragment
         android:id="@+id/studentLandingFragment"
-        android:name="com.example.android.digiteen.StudentLandingFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentLandingFragment"
         android:label="fragment_student_landing"
         tools:layout="@layout/fragment_student_landing" >
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerLandingFragment"
-        android:name="com.example.android.digiteen.OwnerLandingFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerLandingFragment"
         android:label="fragment_owner_landing"
         tools:layout="@layout/fragment_owner_landing" >
         <action

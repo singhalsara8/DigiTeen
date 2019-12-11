@@ -1,4 +1,4 @@
-package com.example.android.digiteen;
+package com.example.android.digiteen.View;
 
 import android.os.Bundle;
 
@@ -6,14 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import com.example.android.digiteen.R;
+import com.example.android.digiteen.Adapter.TabAdapter;
+import com.example.android.digiteen.View.Owner.OwnerSignUpFragment;
+import com.example.android.digiteen.View.Student.StudentSignUpFragment;
 
 import java.util.ArrayList;
 import java.util.List;
