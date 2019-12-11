@@ -91,6 +91,10 @@ public class LoginFragment extends Fragment {
                                     if (ctgry.equals("student")) {
                                         navController.navigate(R.id.action_loginFragment_to_studentLandingFragment, null, navOptions);
                                     }
+                                    else
+                                    {
+                                        navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment,null,navOptions);
+                                    }
 
                                 }
 
