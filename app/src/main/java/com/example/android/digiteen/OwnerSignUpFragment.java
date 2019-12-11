@@ -5,8 +5,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,9 +26,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.layout.simple_spinner_item;
+
 public class OwnerSignUpFragment extends Fragment {
-    private EditText ownerName, ownerCanteen, ownerNumber, ownerEmail, ownerPw;
+    private EditText ownerName, ownerNumber, ownerEmail, ownerPw;
     private Button ownerRegistration;
+    private Spinner spinner;
     FirebaseAuth fauth;
     DatabaseReference ref;
     NavController navController;
@@ -52,26 +61,50 @@ public class OwnerSignUpFragment extends Fragment {
         fauth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference();
         ownerName = view.findViewById(R.id.Owner_name);
-        ownerCanteen = view.findViewById(R.id.canteen);
         ownerNumber = view.findViewById(R.id.owner_number);
         ownerEmail = view.findViewById(R.id.owner_email);
         ownerPw = view.findViewById(R.id.owner_password);
         ownerRegistration = view.findViewById(R.id.owner_register);
+        spinner=view.findViewById(R.id.canteen_spinner);
         navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
+        List<String> canteen=new ArrayList<>();
+        canteen.add("Azad Bhawan");
+        canteen.add("Cautley Bhawan");
+        canteen.add("Ganga Bhawan");
+        canteen.add("Govind Bhawan");
+        canteen.add("Jawahar Bhawan");
+        canteen.add("Radhakrishnan Bhawan");
+        canteen.add("Rajendra Bhawan");
+        canteen.add("Rajiv Bhawan");
+        canteen.add("Ravindra Bhawan");
+        canteen.add("Sarojini Bhawan");
+        canteen.add("Kasturba Bhawan");
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getContext(), simple_spinner_item,canteen);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                final String bhwan=spinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
 
         ownerRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String name = ownerName.getText().toString().trim();
-                final String canteen = ownerCanteen.getText().toString().trim();
                 final String number = ownerNumber.getText().toString().trim();
                 final String email = ownerEmail.getText().toString().trim();
                 final String password = ownerPw.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     ownerName.setError("This field cannot be empty");
-                } else if (TextUtils.isEmpty(canteen)) {
-                    ownerCanteen.setError("This field cannot be empty");
-                } else if (TextUtils.isEmpty(number)) {
+                }  else if (TextUtils.isEmpty(number)) {
                     ownerNumber.setError("This field cannot be empty");
                 } else if (TextUtils.isEmpty(email)) {
                     ownerEmail.setError("Email is required");
@@ -86,7 +119,6 @@ public class OwnerSignUpFragment extends Fragment {
                             {
                                 DatabaseReference ownrref=ref.child("user").child(fauth.getCurrentUser().getUid());
                                 ownrref.child("Profile").child("name").setValue(name);
-                                ownrref.child("Profile").child("canteen").setValue(canteen);
                                 ownrref.child("Profile").child("number").setValue(number);
                                 ownrref.child("Profile").child("email").setValue(email);
                                 ownrref.child("Profile").child("category").setValue("owner");

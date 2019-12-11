@@ -29,13 +29,19 @@
             android:layout_marginBottom="20dp"
             android:inputType="text" />
 
-        <EditText
-            android:id="@+id/canteen"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_marginBottom="20dp"
             android:layout_height="wrap_content"
-            android:hint="@string/canteen_name"
-            android:inputType="text" />
+            android:layout_marginBottom="10dp"
+            android:text="@string/canteen"
+            />
+
+
+        <Spinner
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginBottom="20dp"
+           android:id="@+id/canteen_spinner" />
 
 
         <EditText

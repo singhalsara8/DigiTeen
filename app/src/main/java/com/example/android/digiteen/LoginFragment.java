@@ -86,7 +86,6 @@ public class LoginFragment extends Fragment {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String ctgry = dataSnapshot.child("category").getValue(String.class);
-                                    Log.d("debug","login successful");
                                     NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
                                     assert ctgry != null;
                                     if (ctgry.equals("student")) {
