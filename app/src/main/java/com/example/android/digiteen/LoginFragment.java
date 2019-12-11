@@ -96,6 +96,7 @@ public class LoginFragment extends Fragment {
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    fAuth.signOut();
                                     Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -146,7 +147,9 @@ public class LoginFragment extends Fragment {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getContext(), "Read error", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    fAuth.signOut();
+                    Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
                 }
             });
         }

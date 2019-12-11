@@ -1,5 +1,6 @@
 package com.example.android.digiteen;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ public class StudentSignUpFragment extends Fragment {
     private EditText mStudentName, mStudentEnroll, mStudentHostel, mStudentNumber, mStudentemail, mStudentPassword;
     private Button mStudentRegister;
     private FirebaseAuth fauth;
+    private ProgressDialog progressDialog;
     private NavController navController;
     private DatabaseReference ref;
 
@@ -61,6 +64,7 @@ public class StudentSignUpFragment extends Fragment {
         mStudentemail = view.findViewById(R.id.student_email);
         mStudentPassword = view.findViewById(R.id.student_password);
         mStudentRegister = view.findViewById(R.id.student_register);
+        progressDialog=new ProgressDialog(getContext());
         fauth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference();
         navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
@@ -88,10 +92,14 @@ public class StudentSignUpFragment extends Fragment {
                 } else if (TextUtils.isEmpty(password)) {
                     mStudentPassword.setError("Password is required");
                 } else {
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setMessage("signing in please wait....");
+                    progressDialog.show();
                     fauth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                progressDialog.dismiss();
                                 DatabaseReference usref = ref.child("user").child(fauth.getCurrentUser().getUid());
                                 usref.child("profile").child("name").setValue(name);
                                 usref.child("profile").child("enrollment").setValue(enroll);
@@ -106,6 +114,7 @@ public class StudentSignUpFragment extends Fragment {
                             }
                             else
                             {
+                                progressDialog.dismiss();
                                 Toast.makeText(getContext(),"Registration unsuccessful",Toast.LENGTH_SHORT).show();
                             }
                         }

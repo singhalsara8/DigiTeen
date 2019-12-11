@@ -1,5 +1,6 @@
 package com.example.android.digiteen;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class OwnerSignUpFragment extends Fragment {
     FirebaseAuth fauth;
     DatabaseReference ref;
     NavController navController;
+    ProgressDialog progressDialog;
 
     public OwnerSignUpFragment() {
         // Required empty public constructor
@@ -63,6 +65,7 @@ public class OwnerSignUpFragment extends Fragment {
         ownerName = view.findViewById(R.id.Owner_name);
         ownerNumber = view.findViewById(R.id.owner_number);
         ownerEmail = view.findViewById(R.id.owner_email);
+        progressDialog=new ProgressDialog(getContext());
         ownerPw = view.findViewById(R.id.owner_password);
         ownerRegistration = view.findViewById(R.id.owner_register);
         spinner=view.findViewById(R.id.canteen_spinner);
@@ -112,21 +115,26 @@ public class OwnerSignUpFragment extends Fragment {
                     ownerPw.setError("Password is required");
                 }
                 else {
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setMessage("signing in please wait....");
+                    progressDialog.show();
                     fauth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful())
                             {
+                                progressDialog.dismiss();
                                 DatabaseReference ownrref=ref.child("user").child(fauth.getCurrentUser().getUid());
-                                ownrref.child("Profile").child("name").setValue(name);
-                                ownrref.child("Profile").child("number").setValue(number);
-                                ownrref.child("Profile").child("email").setValue(email);
-                                ownrref.child("Profile").child("category").setValue("owner");
+                                ownrref.child("profile").child("name").setValue(name);
+                                ownrref.child("profile").child("number").setValue(number);
+                                ownrref.child("profile").child("email").setValue(email);
+                                ownrref.child("profile").child("category").setValue("owner");
                                 Toast.makeText(getContext(),"Registration successful",Toast.LENGTH_SHORT).show();
                                 NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
                                 navController.navigate(R.id.action_signUpFragment_to_ownerLandingFragment, null, navOptions);
                             }
                             else {
+                                progressDialog.dismiss();
                                 Toast.makeText(getContext(),"Registration unsuccessful",Toast.LENGTH_SHORT).show();
                             }
                         }

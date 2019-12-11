@@ -55,6 +55,10 @@
         android:id="@+id/ownerLandingFragment"
         android:name="com.example.android.digiteen.OwnerLandingFragment"
         android:label="fragment_owner_landing"
-        tools:layout="@layout/fragment_owner_landing" />
+        tools:layout="@layout/fragment_owner_landing" >
+        <action
+            android:id="@+id/action_ownerLandingFragment_to_loginFragment2"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
 </navigation>
