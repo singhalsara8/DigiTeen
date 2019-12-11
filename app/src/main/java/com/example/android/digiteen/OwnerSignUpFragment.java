@@ -12,6 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +28,7 @@ public class OwnerSignUpFragment extends Fragment {
     private Button ownerRegistration;
     FirebaseAuth fauth;
     DatabaseReference ref;
+    NavController navController;
 
     public OwnerSignUpFragment() {
         // Required empty public constructor
@@ -53,6 +57,7 @@ public class OwnerSignUpFragment extends Fragment {
         ownerEmail = view.findViewById(R.id.owner_email);
         ownerPw = view.findViewById(R.id.owner_password);
         ownerRegistration = view.findViewById(R.id.owner_register);
+        navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
 
         ownerRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +90,15 @@ public class OwnerSignUpFragment extends Fragment {
                                 ownrref.child("Profile").child("number").setValue(number);
                                 ownrref.child("Profile").child("email").setValue(email);
                                 ownrref.child("Profile").child("category").setValue("owner");
+                                Toast.makeText(getContext(),"Registration successful",Toast.LENGTH_SHORT).show();
+                                NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
+                                navController.navigate(R.id.action_signUpFragment_to_ownerLandingFragment, null, navOptions);
+                            }
+                            else {
+                                Toast.makeText(getContext(),"Registration unsuccessful",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-                    Toast.makeText(getContext(),"Registration successful",Toast.LENGTH_SHORT).show();
                 }
             }
         });

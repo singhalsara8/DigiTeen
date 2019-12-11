@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_studentLandingFragment"
             app:destination="@id/studentLandingFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_ownerLandingFragment"
+            app:destination="@id/ownerLandingFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentSignUp"
@@ -30,6 +33,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_studentLandingFragment"
             app:destination="@id/studentLandingFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_ownerLandingFragment"
+            app:destination="@id/ownerLandingFragment" />
     </fragment>
     <fragment
         android:id="@+id/ownerSignUp"
@@ -45,5 +51,10 @@
             android:id="@+id/action_studentLandingFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ownerLandingFragment"
+        android:name="com.example.android.digiteen.OwnerLandingFragment"
+        android:label="fragment_owner_landing"
+        tools:layout="@layout/fragment_owner_landing" />
 
 </navigation>

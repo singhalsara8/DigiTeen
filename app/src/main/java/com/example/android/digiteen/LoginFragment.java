@@ -1,5 +1,6 @@
 package com.example.android.digiteen;
 
+import android.app.ProgressDialog;
 import android.nfc.Tag;
 import android.os.Bundle;
 
@@ -40,6 +41,7 @@ public class LoginFragment extends Fragment {
     private FirebaseAuth fAuth;
     private DatabaseReference ref;
     private NavController navController;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,10 +71,15 @@ public class LoginFragment extends Fragment {
                     mpassword.setError("Password is Required");
                     return;
                 }
+                progressDialog=new ProgressDialog(getContext());
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setMessage("Logging in please wait....");
+                progressDialog.show();
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            progressDialog.dismiss();
                             Toast.makeText(getContext(), "login successful", Toast.LENGTH_SHORT).show();
                             DatabaseReference usr = ref.child("user").child(fAuth.getCurrentUser().getUid()).child("profile");
                             usr.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -96,7 +103,8 @@ public class LoginFragment extends Fragment {
                         }
                         else
                         {
-                            Log.d("debug","login unsuccessful");
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -115,16 +123,24 @@ public class LoginFragment extends Fragment {
     public void checkUserLoggedIn() {
         if (fAuth.getCurrentUser() != null)
         {
-            Log.d("debud","curent usr found");
+            progressDialog=new ProgressDialog(getContext());
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Logging in please wait....");
+            progressDialog.show();
             DatabaseReference usr = ref.child("user").child(fAuth.getCurrentUser().getUid()).child("profile");
             usr.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String ctgry = dataSnapshot.child("category").getValue(String.class);
                     NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
+                    progressDialog.dismiss();
                     assert ctgry != null;
                     if (ctgry.equals("student")) {
                         navController.navigate(R.id.action_loginFragment_to_studentLandingFragment, null, navOptions);
+                    }
+                    else
+                    {
+                        navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment,null,navOptions);
                     }
 
                 }
@@ -134,10 +150,6 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getContext(), "Read error", Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        else
-        {
-            Log.d("debug","current user not found");
         }
     }
 }
