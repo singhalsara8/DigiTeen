@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".StudentLandingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:id="@+id/my_orders"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="@string/my_orders"
+        android:textSize="20sp"
+        android:background="@drawable/circular_bttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/new_order"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="@string/new_order"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circular_bttn" />
+
     <Button
         android:layout_width="wrap_content"
         android:id="@+id/logout"
         android:layout_height="wrap_content"
         android:text="signout"/>
 
-</FrameLayout>
+</LinearLayout>
