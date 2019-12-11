@@ -25,14 +25,18 @@
 
         </ImageView>
 
-
-      <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
           android:layout_width="match_parent"
           android:id="@+id/email_id"
           android:layout_height="wrap_content"
           android:hint="@string/email_id"
           android:layout_marginBottom="10dp"
           android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
