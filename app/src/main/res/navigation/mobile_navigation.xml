@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/studentchooseCanteenFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_studentLandingFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_studentLandingFragment_to_studentchooseCanteenFragment"
+            app:destination="@id/studentchooseCanteenFragment" />
     </fragment>
     <fragment
         android:id="@+id/ownerLandingFragment"
@@ -60,5 +63,19 @@
             android:id="@+id/action_ownerLandingFragment_to_loginFragment2"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/studentchooseCanteenFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentchooseCanteenFragment"
+        android:label="fragment_studentchoose_canteen"
+        tools:layout="@layout/fragment_studentchoose_canteen" >
+        <action
+            android:id="@+id/action_studentchooseCanteenFragment_to_studentSelectItemFragment"
+            app:destination="@id/studentSelectItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentSelectItemFragment"
+        android:name="com.example.android.digiteen.StudentSelectItemFragment"
+        android:label="fragment_student_select_item"
+        tools:layout="@layout/fragment_student_select_item" />
 
 </navigation>

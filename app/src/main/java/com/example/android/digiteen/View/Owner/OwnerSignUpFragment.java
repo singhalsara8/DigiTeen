@@ -3,6 +3,7 @@ package com.example.android.digiteen.View.Owner;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class OwnerSignUpFragment extends Fragment {
     DatabaseReference ref;
     NavController navController;
     ProgressDialog progressDialog;
+    public static String bhawan;
 
     public OwnerSignUpFragment() {
         // Required empty public constructor
@@ -83,13 +85,13 @@ public class OwnerSignUpFragment extends Fragment {
         canteen.add("Ravindra Bhawan");
         canteen.add("Sarojini Bhawan");
         canteen.add("Kasturba Bhawan");
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getContext(), simple_spinner_item,canteen);
+        ArrayAdapter<String> adapter= new ArrayAdapter<>(getContext(), simple_spinner_item, canteen);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                final String bhwan=spinner.getSelectedItem().toString();
+              bhawan=spinner.getSelectedItem().toString().trim();
             }
 
             @Override
@@ -129,6 +131,7 @@ public class OwnerSignUpFragment extends Fragment {
                                 ownrref.child("profile").child("name").setValue(name);
                                 ownrref.child("profile").child("number").setValue(number);
                                 ownrref.child("profile").child("email").setValue(email);
+                                ownrref.child("profile").child("bhawan").setValue(bhawan);
                                 ownrref.child("profile").child("category").setValue("owner");
                                 Toast.makeText(getContext(),"Registration successful",Toast.LENGTH_SHORT).show();
                                 NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();

@@ -17,4 +17,6 @@
     <string name="canteen">CANTEEN</string>
     <string name="my_orders">My Orders</string>
     <string name="new_order">New Order</string>
+    <string name="choose_canteen">Choose Canteen</string>
+    <string name="submit">SUBMIT</string>
 </resources>
