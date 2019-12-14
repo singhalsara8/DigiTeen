@@ -70,7 +70,6 @@ public class StudentchooseCanteenFragment extends Fragment {
                     for(DataSnapshot readData: dataSnapshot.getChildren()){
                         list.add(readData.getKey());
                         adapter.notifyDataSetChanged();
-                        Log.d("list",list.toString());
                     }
                     RecyclerView.LayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
                     radiobttn.setLayoutManager(linearLayoutManager);
