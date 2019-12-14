@@ -1,5 +1,6 @@
 package com.example.android.digiteen.View.Student;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class StudentchooseCanteenFragment extends Fragment {
     String s;
     NavController navController;
     Button bttn;
+    ProgressDialog progressDialog;
 
     public StudentchooseCanteenFragment() {
         // Required empty public constructor
@@ -58,6 +60,10 @@ public class StudentchooseCanteenFragment extends Fragment {
         bundle=new Bundle();
         radiobttn = view.findViewById(R.id.recyclerView);
         navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         BhawanDataViewModel viewModel= ViewModelProviders.of(this).get(BhawanDataViewModel.class);
         LiveData<DataSnapshot>liveData= viewModel.getdatasnapshotlivedata();
         liveData.observe(this, new Observer<DataSnapshot>() {
@@ -72,6 +78,7 @@ public class StudentchooseCanteenFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         Log.d("list",list.toString());
                     }
+                    progressDialog.dismiss();
                     RecyclerView.LayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
                     radiobttn.setLayoutManager(linearLayoutManager);
                     radiobttn.setAdapter(adapter);

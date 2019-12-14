@@ -76,6 +76,15 @@
         android:id="@+id/studentSelectItemFragment"
         android:name="com.example.android.digiteen.View.Student.StudentSelectItemFragment"
         android:label="fragment_student_select_item"
-        tools:layout="@layout/fragment_student_select_item" />
+        tools:layout="@layout/fragment_student_select_item" >
+        <action
+            android:id="@+id/action_studentSelectItemFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.example.android.digiteen.View.Student.OrderDetailFragment"
+        android:label="fragment_order_detail"
+        tools:layout="@layout/fragment_order_detail" />
 
 </navigation>
