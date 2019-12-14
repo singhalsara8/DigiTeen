@@ -1,11 +1,11 @@
 package com.example.android.digiteen.View.Student;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,12 +25,15 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class StudentchooseCanteenFragment extends Fragment {
     RadioButtonAdapter adapter;
     RecyclerView radiobttn;
+    Bundle bundle;
+    String s;
+    NavController navController;
+    Button bttn;
 
     public StudentchooseCanteenFragment() {
         // Required empty public constructor
@@ -49,7 +54,10 @@ public class StudentchooseCanteenFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        bttn=view.findViewById(R.id.submit);
+        bundle=new Bundle();
         radiobttn = view.findViewById(R.id.recyclerView);
+        navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
         BhawanDataViewModel viewModel= ViewModelProviders.of(this).get(BhawanDataViewModel.class);
         LiveData<DataSnapshot>liveData= viewModel.getdatasnapshotlivedata();
         liveData.observe(this, new Observer<DataSnapshot>() {
@@ -68,6 +76,14 @@ public class StudentchooseCanteenFragment extends Fragment {
                     radiobttn.setLayoutManager(linearLayoutManager);
                     radiobttn.setAdapter(adapter);
                 }
+            }
+        });
+        bttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                s=adapter.getUserId();
+                bundle.putString("list",s);
+                navController.navigate(R.id.action_studentchooseCanteenFragment_to_studentSelectItemFragment,bundle);
             }
         });
     }

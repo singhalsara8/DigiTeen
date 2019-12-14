@@ -25,6 +25,15 @@ public class RadioButtonAdapter extends RecyclerView.Adapter<RadioButtonAdapter.
         list=canteen;
         context=contxt;
     }
+    public String getUserId(){
+
+        if(lastSelectedPosition == -1)
+        {
+            return null;
+        } else {
+            return list.get(lastSelectedPosition);
+        }
+    }
 
     @NonNull
     @Override
@@ -47,9 +56,9 @@ public class RadioButtonAdapter extends RecyclerView.Adapter<RadioButtonAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView canteen_name;
-        public RadioButton selectionState;
-        public ViewHolder(View view)
+        private TextView canteen_name;
+        private RadioButton selectionState;
+        private ViewHolder(View view)
         {
             super(view);
             canteen_name=view.findViewById(R.id.bhawan);
@@ -59,7 +68,6 @@ public class RadioButtonAdapter extends RecyclerView.Adapter<RadioButtonAdapter.
                 public void onClick(View view) {
                     lastSelectedPosition=getAdapterPosition();
                     notifyDataSetChanged();
-                    Toast.makeText(RadioButtonAdapter.this.context,"Selected canteen is "+canteen_name,Toast.LENGTH_SHORT).show();
                 }
             });
         }

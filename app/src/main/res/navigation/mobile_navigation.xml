@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/studentSelectItemFragment"
-        android:name="com.example.android.digiteen.StudentSelectItemFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentSelectItemFragment"
         android:label="fragment_student_select_item"
         tools:layout="@layout/fragment_student_select_item" />
 
