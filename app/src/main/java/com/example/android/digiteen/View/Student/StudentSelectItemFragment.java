@@ -17,6 +17,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -146,7 +147,8 @@ public class StudentSelectItemFragment extends Fragment {
                         }
                         reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("status").setValue("Payment Pending");
                         bundle.putString("token",token);
-                        navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment,bundle);
+                        NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.studentLandingFragment,false).build();
+                        navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment,bundle,navOptions);
                     }
                 });
                 builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
