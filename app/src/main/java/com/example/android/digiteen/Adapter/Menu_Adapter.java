@@ -91,6 +91,7 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             number = view.findViewById(R.id.number);
             increment = view.findViewById(R.id.increment);
             decrement = view.findViewById(R.id.decrement);
+            number.setEnabled(false);
             increment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

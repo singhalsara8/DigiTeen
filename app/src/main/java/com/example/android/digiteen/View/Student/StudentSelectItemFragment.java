@@ -50,6 +50,7 @@ public class StudentSelectItemFragment extends Fragment {
     private List<SelectMenu> selectMenus;
     private List<MenuItem> menuItems;
     private String token;
+    private Bundle bundle;
 //    private ConnectivityManager cm;
 
 
@@ -74,6 +75,7 @@ public class StudentSelectItemFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        cm= (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        bundle=new Bundle();
         selectMenus=new ArrayList<>();
         menuItems=new ArrayList<>();
         firebaseAuth=FirebaseAuth.getInstance();
@@ -142,7 +144,8 @@ public class StudentSelectItemFragment extends Fragment {
                             reference.child("bhawan").child(bhawan).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("quantity").setValue(menuItems.get(k).getMnumber());
 
                         }
-                        navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment);
+                        bundle.putString("token",token);
+                        navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment,bundle);
                     }
                 });
                 builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {

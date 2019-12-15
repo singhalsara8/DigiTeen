@@ -12,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class StudentDataViewModel extends ViewModel {
     FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-    private final DatabaseReference databaseref= FirebaseDatabase.getInstance().getReference().child("user").child(firebaseAuth.getCurrentUser().getUid());
+    private final DatabaseReference databaseref= FirebaseDatabase.getInstance().getReference().child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order");
     private FireBaseQueryLiveData liveData=new FireBaseQueryLiveData(databaseref);
 
     @NonNull
