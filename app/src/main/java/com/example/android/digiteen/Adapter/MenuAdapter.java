@@ -17,12 +17,12 @@ import com.example.android.digiteen.R;
 
 import java.util.List;
 
-public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private List<SelectMenu> list;
 
-    public Menu_Adapter(Context context, List<SelectMenu> list) {
+    public MenuAdapter(Context context, List<SelectMenu> list) {
         this.context = context;
         this.list = list;
     }
@@ -35,11 +35,11 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == SelectMenu.MENU_TYPE) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.select_item, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_menu, parent, false);
             RecyclerView.ViewHolder holder = new MenuItemViewHolder(view);
             return holder;
         } else if (viewType == SelectMenu.TOTAL_TYPE) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grand_total, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_grand_total, parent, false);
             RecyclerView.ViewHolder holder = new GrandTotalViewHolder(view);
             return holder;
         }

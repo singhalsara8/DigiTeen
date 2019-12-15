@@ -30,7 +30,8 @@ public class OrderDetailFragment extends Fragment {
     OrderSummaryAdapter adapter;
     RecyclerView recyclerView;
     String token_number;
-    TextView token;
+    TextView token,summary,total;
+    int grandTotal=0;
 
     public OrderDetailFragment() {
         // Required empty public constructor
@@ -50,7 +51,9 @@ public class OrderDetailFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        total=view.findViewById(R.id.Grand_total_value);
         token=view.findViewById(R.id.token_number_value);
+        summary=view.findViewById(R.id.summary);
         token_number=getArguments().getString("token");
         token.setText(token_number);
         recyclerView=view.findViewById(R.id.order_details_recyclerview);
@@ -60,6 +63,8 @@ public class OrderDetailFragment extends Fragment {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
                 if (dataSnapshot!=null) {
+                    Log.d("status",dataSnapshot.child(token_number).child("status").getValue().toString());
+                    summary.setText(dataSnapshot.child(token_number).child("status").getValue().toString());
                     List<OrderSummary> list = new ArrayList<>();
                     adapter = new OrderSummaryAdapter(getContext(), list);
                     for (DataSnapshot readData:dataSnapshot.child(token_number).child("item").getChildren())
@@ -70,6 +75,9 @@ public class OrderDetailFragment extends Fragment {
                         list.add(new OrderSummary(readData.getKey(),price,quantity,price*quantity));
                         adapter.notifyDataSetChanged();
                     }
+                    grandTotal=adapter.getTotal();
+                    Log.d("total",String.valueOf(grandTotal));
+                    total.setText(String.valueOf(grandTotal));
                     RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapter);

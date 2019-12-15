@@ -21,7 +21,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.digiteen.Adapter.Menu_Adapter;
+import com.example.android.digiteen.Adapter.MenuAdapter;
 import com.example.android.digiteen.Model.MenuItem;
 import com.example.android.digiteen.Model.SelectMenu;
 import com.example.android.digiteen.Model.Total;
@@ -41,7 +41,7 @@ import java.util.List;
 public class StudentSelectItemFragment extends Fragment {
     private String bhawan;
     private RecyclerView recyclerView;
-    private Menu_Adapter menuAdapter;
+    private MenuAdapter menuAdapter;
     private NavController navController;
     private Button bttn;
     private ProgressDialog progressDialog;
@@ -96,7 +96,7 @@ public class StudentSelectItemFragment extends Fragment {
             public void onChanged(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     final List<SelectMenu> list = new ArrayList<>();
-                    menuAdapter = new Menu_Adapter(getContext(), list);
+                    menuAdapter = new MenuAdapter(getContext(), list);
                     for (DataSnapshot readData : dataSnapshot.child(bhawan).child("Menu").getChildren()) {
                         Log.d("debug", readData.getValue().toString());
                         int price = Integer.parseInt(readData.getValue().toString());
@@ -144,6 +144,7 @@ public class StudentSelectItemFragment extends Fragment {
                             reference.child("bhawan").child(bhawan).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("quantity").setValue(menuItems.get(k).getMnumber());
 
                         }
+                        reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("status").setValue("Payment Pending");
                         bundle.putString("token",token);
                         navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment,bundle);
                     }

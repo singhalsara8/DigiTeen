@@ -24,10 +24,19 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
         this.list = list;
     }
 
+    public int getTotal(){
+        int total=0;
+        for(int i=0; i<list.size();i++)
+        {
+            total+=list.get(i).getMitemprice()*list.get(i).getMitemQuantity();
+        }
+        return total;
+    }
+
     @NonNull
     @Override
     public OrderSummaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.order_details,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_order_details,parent,false);
         OrderSummaryViewHolder viewHolder=new OrderSummaryViewHolder(view);
         return viewHolder;
     }
