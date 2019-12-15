@@ -38,7 +38,6 @@ public class OrderDetailFragment extends Fragment {
     Calendar calendar;
     OrderSummaryAdapter adapter;
     RecyclerView recyclerView;
-    long token;
 
     public OrderDetailFragment() {
         // Required empty public constructor
@@ -64,23 +63,22 @@ public class OrderDetailFragment extends Fragment {
 //      // Long sys=System.currentTimeMillis()/1000;
 //       //String s=sys.toString();
 //        Log.d("timestamp",s);
-        token=123456789;
         recyclerView=view.findViewById(R.id.order_details_recyclerview);
         StudentDataViewModel viewModel= ViewModelProviders.of(this).get(StudentDataViewModel.class);
         LiveData<DataSnapshot> liveData= viewModel.getdatasnapshotlivedata();
-        liveData.observe(this, new Observer<DataSnapshot>() {
-            @Override
-            public void onChanged(DataSnapshot dataSnapshot) {
-                if (dataSnapshot!=null) {
-                    List<OrderSummary> list = new ArrayList<>();
-                    adapter = new OrderSummaryAdapter(getContext(), list);
-                    for (DataSnapshot readData:dataSnapshot.child("order").child(String.valueOf(token)).getChildren())
-                    {
-                        Log.d("key",readData.getKey());
-                    }
-                }
-            }
-        });
+//        liveData.observe(this, new Observer<DataSnapshot>() {
+//            @Override
+//            public void onChanged(DataSnapshot dataSnapshot) {
+//                if (dataSnapshot!=null) {
+//                    List<OrderSummary> list = new ArrayList<>();
+//                    adapter = new OrderSummaryAdapter(getContext(), list);
+//                    for (DataSnapshot readData:dataSnapshot.child("order").child(String.valueOf(token)).getChildren())
+//                    {
+//                        Log.d("key",readData.getKey());
+//                    }
+//                }
+//            }
+//        });
 
     }
 }

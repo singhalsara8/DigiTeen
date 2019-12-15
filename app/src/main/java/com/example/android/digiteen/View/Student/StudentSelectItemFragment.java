@@ -1,12 +1,17 @@
 package com.example.android.digiteen.View.Student;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -16,31 +21,37 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.example.android.digiteen.Adapter.Menu_Adapter;
 import com.example.android.digiteen.Model.MenuItem;
 import com.example.android.digiteen.Model.SelectMenu;
 import com.example.android.digiteen.Model.Total;
 import com.example.android.digiteen.R;
 import com.example.android.digiteen.ViewModel.BhawanDataViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class StudentSelectItemFragment extends Fragment {
-    String bhawan;
-    RecyclerView recyclerView;
-    Menu_Adapter menuAdapter;
-    NavController navController;
-    Button bttn;
-    ProgressDialog progressDialog;
+    private String bhawan;
+    private RecyclerView recyclerView;
+    private Menu_Adapter menuAdapter;
+    private NavController navController;
+    private Button bttn;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference reference;
+    private List<SelectMenu> selectMenus;
+    private List<MenuItem> menuItems;
+    private String token;
+//    private ConnectivityManager cm;
+
 
     public StudentSelectItemFragment() {
         // Required empty public constructor
@@ -62,6 +73,11 @@ public class StudentSelectItemFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        cm= (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        selectMenus=new ArrayList<>();
+        menuItems=new ArrayList<>();
+        firebaseAuth=FirebaseAuth.getInstance();
+        reference= FirebaseDatabase.getInstance().getReference();
         bttn = view.findViewById(R.id.place_order);
         navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
         bhawan = getArguments().getString("list");
@@ -101,7 +117,41 @@ public class StudentSelectItemFragment extends Fragment {
         bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment);
+                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                builder.setMessage("Do you want to confirm order");
+                builder.setTitle("CONFIRMATION");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyMMddHHmmss");
+                        token=simpleDateFormat.format(new Date());
+                        Log.d("timestamp",token);
+                        selectMenus=menuAdapter.getList();
+                        for (int j=0; j<selectMenus.size()-1; j++)
+                        {
+                            if(selectMenus.get(j).getMenuItem().getMnumber()!=0)
+                            {
+                                menuItems.add(selectMenus.get(j).getMenuItem());
+                            }
+                        }
+                        for(int k=0; k<menuItems.size();k++)
+                        {
+                            reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("price").setValue(menuItems.get(k).getMamount());
+                            reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("quantity").setValue(menuItems.get(k).getMnumber());
+                            reference.child("bhawan").child(bhawan).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("price").setValue(menuItems.get(k).getMamount());
+                            reference.child("bhawan").child(bhawan).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("quantity").setValue(menuItems.get(k).getMnumber());
+
+                        }
+                        navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment);
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
             }
         });
     }

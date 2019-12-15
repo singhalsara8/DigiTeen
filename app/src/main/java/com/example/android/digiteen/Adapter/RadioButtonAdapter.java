@@ -18,7 +18,7 @@ import java.util.List;
 public class RadioButtonAdapter extends RecyclerView.Adapter<RadioButtonAdapter.ViewHolder> {
     private Context context;
     private List<String> list;
-    private int lastSelectedPosition=-1;
+    private int lastSelectedPosition=0;
 
     public RadioButtonAdapter(List<String> canteen, Context contxt)
     {

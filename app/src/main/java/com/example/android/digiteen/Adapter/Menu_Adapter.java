@@ -26,6 +26,9 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.context = context;
         this.list = list;
     }
+    public List<SelectMenu> getList(){
+        return list;
+    }
 
     @NonNull
     @Override
