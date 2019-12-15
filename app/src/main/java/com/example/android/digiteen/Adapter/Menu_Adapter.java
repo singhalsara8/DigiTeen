@@ -52,11 +52,11 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (menu != null) {
             if (menu.getType() == SelectMenu.MENU_TYPE) {
                 ((MenuItemViewHolder) holder).item.setText(menu.getMenuItem().getMitem());
-                ((MenuItemViewHolder) holder).amount.setText(String.valueOf(menu.getMenuItem().getMamount()));
-                ((MenuItemViewHolder) holder).subtotal.setText(String.valueOf(menu.getMenuItem().getMsubtotal()));
+                ((MenuItemViewHolder) holder).amount.setText(menu.getMenuItem().getMamount()+"₹");
+                ((MenuItemViewHolder) holder).subtotal.setText(menu.getMenuItem().getMsubtotal()+"₹");
                 ((MenuItemViewHolder) holder).number.setText(String.valueOf(menu.getMenuItem().getMnumber()));
             } else if (menu.getType() == SelectMenu.TOTAL_TYPE) {
-                ((GrandTotalViewHolder) holder).totalValue.setText(String.valueOf(menu.getTotal().getMtotalvalue()));
+                ((GrandTotalViewHolder) holder).totalValue.setText(menu.getTotal().getMtotalvalue()+"₹");
             }
         }
     }

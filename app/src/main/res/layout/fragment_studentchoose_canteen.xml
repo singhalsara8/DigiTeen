@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".View.Student.StudentchooseCanteenFragment">
-
-
         <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/choose_canteen"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:text="@string/choose_canteen" />
-
+            android:textStyle="bold" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
         <Button
             android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:padding="12dp"
-            android:text="@string/proceed"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
             android:background="@drawable/rnd_bttn"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-
+            android:text="@string/proceed"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 </LinearLayout>
