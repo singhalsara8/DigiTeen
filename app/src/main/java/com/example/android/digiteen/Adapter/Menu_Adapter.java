@@ -92,20 +92,20 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     SelectMenu menu = list.get(getAdapterPosition());
-                    SelectMenu selectMenu=list.get(list.size()-1);
+                    SelectMenu selectMenu = list.get(list.size() - 1);
                     int i = menu.getMenuItem().getMnumber();
                     int total;
                     int cost = menu.getMenuItem().getMamount();
-                    int finaltotal=selectMenu.getTotal().getMtotalvalue();
+                    int finaltotal = selectMenu.getTotal().getMtotalvalue();
                     i += 1;
                     total = i * cost;
-                        finaltotal+=total;
+                    finaltotal += cost;
                     selectMenu.getTotal().setMtotalvalue(finaltotal);
                     menu.getMenuItem().setMnumber(i);
                     menu.getMenuItem().setMsubtotal(total);
                     list.set(getAdapterPosition(), menu);
                     notifyDataSetChanged();
-                    list.set(list.size()-1,selectMenu);
+                    list.set(list.size() - 1, selectMenu);
                     notifyDataSetChanged();
                 }
             });
@@ -113,6 +113,8 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     SelectMenu menuItem = list.get(getAdapterPosition());
+                    SelectMenu selectMenu = list.get(list.size() - 1);
+                    int grandTotal=selectMenu.getTotal().getMtotalvalue();
                     int i = menuItem.getMenuItem().getMnumber();
                     int cost = menuItem.getMenuItem().getMamount();
                     int total;
@@ -121,10 +123,15 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         Toast.makeText(context, "Quantity cannot be less than 0", Toast.LENGTH_SHORT).show();
                     } else {
                         total = i * cost;
+                        grandTotal-=cost;
+                        selectMenu.getTotal().setMtotalvalue(grandTotal);
                         menuItem.getMenuItem().setMnumber(i);
                         menuItem.getMenuItem().setMsubtotal(total);
                         list.set(getAdapterPosition(), menuItem);
                         notifyDataSetChanged();
+                        list.set(list.size() - 1, selectMenu);
+                        notifyDataSetChanged();
+
                     }
                 }
             });

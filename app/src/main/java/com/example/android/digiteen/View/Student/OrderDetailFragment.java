@@ -76,7 +76,7 @@ public class OrderDetailFragment extends Fragment {
                     adapter = new OrderSummaryAdapter(getContext(), list);
                     for (DataSnapshot readData:dataSnapshot.child("order").child(String.valueOf(token)).getChildren())
                     {
-                        list.add(new OrderSummary(readData.getKey(),))
+                        Log.d("key",readData.getKey());
                     }
                 }
             }
