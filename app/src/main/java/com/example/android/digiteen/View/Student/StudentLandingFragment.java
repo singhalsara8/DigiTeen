@@ -43,6 +43,7 @@ public class StudentLandingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         placeorder=view.findViewById(R.id.new_order);
+        myorder=view.findViewById(R.id.my_orders);
         logout=view.findViewById(R.id.logout);
         fauth=FirebaseAuth.getInstance();
         navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
@@ -58,6 +59,12 @@ public class StudentLandingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.action_studentLandingFragment_to_studentchooseCanteenFragment);
+            }
+        });
+        myorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_studentLandingFragment_to_studentOrderListFragment);
             }
         });
 
