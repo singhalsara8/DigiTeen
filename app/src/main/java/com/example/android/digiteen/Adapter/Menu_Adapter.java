@@ -6,16 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.digiteen.Model.MenuItem;
 import com.example.android.digiteen.Model.SelectMenu;
-import com.example.android.digiteen.Model.Total;
 import com.example.android.digiteen.R;
 
 import java.util.List;
@@ -95,14 +92,20 @@ public class Menu_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     SelectMenu menu = list.get(getAdapterPosition());
+                    SelectMenu selectMenu=list.get(list.size()-1);
                     int i = menu.getMenuItem().getMnumber();
                     int total;
                     int cost = menu.getMenuItem().getMamount();
+                    int finaltotal=selectMenu.getTotal().getMtotalvalue();
                     i += 1;
                     total = i * cost;
+                        finaltotal+=total;
+                    selectMenu.getTotal().setMtotalvalue(finaltotal);
                     menu.getMenuItem().setMnumber(i);
                     menu.getMenuItem().setMsubtotal(total);
                     list.set(getAdapterPosition(), menu);
+                    notifyDataSetChanged();
+                    list.set(list.size()-1,selectMenu);
                     notifyDataSetChanged();
                 }
             });

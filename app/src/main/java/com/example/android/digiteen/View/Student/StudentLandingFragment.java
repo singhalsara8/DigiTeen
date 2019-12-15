@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class StudentLandingFragment extends Fragment {
     FirebaseAuth fauth;
     private Button logout;
+    private Button placeorder, myorder;
     private NavController navController;
 
     public StudentLandingFragment() {
@@ -41,6 +42,7 @@ public class StudentLandingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        placeorder=view.findViewById(R.id.new_order);
         logout=view.findViewById(R.id.logout);
         fauth=FirebaseAuth.getInstance();
         navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
@@ -50,6 +52,12 @@ public class StudentLandingFragment extends Fragment {
                 fauth.signOut();
                 NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.studentLandingFragment, true).build();
                 navController.navigate(R.id.action_studentLandingFragment_to_loginFragment,null,navOptions);
+            }
+        });
+        placeorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_studentLandingFragment_to_studentchooseCanteenFragment);
             }
         });
 

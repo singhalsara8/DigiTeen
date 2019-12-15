@@ -91,7 +91,6 @@ public class StudentSelectItemFragment extends Fragment {
                     Total total = new Total(0);
                     SelectMenu selectMenu1 = new SelectMenu(SelectMenu.TOTAL_TYPE, total);
                     list.add(selectMenu1);
-                    Log.d("check", list.toString());
                     menuAdapter.notifyDataSetChanged();
                     RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                     recyclerView.setLayoutManager(linearLayoutManager);
