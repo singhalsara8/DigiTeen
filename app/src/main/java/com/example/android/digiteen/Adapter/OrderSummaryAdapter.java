@@ -1,29 +1,21 @@
 package com.example.android.digiteen.Adapter;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.android.digiteen.Model.OrderSummary;
 import com.example.android.digiteen.R;
-
 import java.util.List;
-
 public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapter.OrderSummaryViewHolder> {
-
     private Context context;
     private List<OrderSummary> list;
-
     public OrderSummaryAdapter(Context context, List<OrderSummary> list) {
         this.context = context;
         this.list = list;
     }
-
     public int getTotal(){
         int total=0;
         for(int i=0; i<list.size();i++)
@@ -32,7 +24,6 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
         }
         return total;
     }
-
     @NonNull
     @Override
     public OrderSummaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -40,24 +31,20 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
         OrderSummaryViewHolder viewHolder=new OrderSummaryViewHolder(view);
         return viewHolder;
     }
-
     @Override
     public void onBindViewHolder(@NonNull OrderSummaryViewHolder holder, int position) {
         OrderSummary orderSummary=list.get(position);
         holder.itemname.setText(orderSummary.getMitemname());
-        holder.itemprice.setText(String.valueOf(orderSummary.getMitemprice()));
+        holder.itemprice.setText(orderSummary.getMitemprice() +"₹");
         holder.quantityordered.setText(String.valueOf(orderSummary.getMitemQuantity()));
-        holder.subtotal.setText(String.valueOf(orderSummary.getMsubtotal()));
+        holder.subtotal.setText(orderSummary.getMsubtotal() +"₹");
     }
-
     @Override
     public int getItemCount() {
         return list.size();
     }
-
     public class OrderSummaryViewHolder extends RecyclerView.ViewHolder{
         private TextView itemname, itemprice, quantityordered, subtotal;
-
         private OrderSummaryViewHolder(View view){
             super(view);
             itemname=view.findViewById(R.id.item_name);
