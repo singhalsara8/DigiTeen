@@ -7,22 +7,96 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.android.digiteen.LoginFragment"
+        android:name="com.example.android.digiteen.View.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_studentLandingFragment"
+            app:destination="@id/studentLandingFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_ownerLandingFragment"
+            app:destination="@id/ownerLandingFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentSignUp"
-        android:name="com.example.android.digiteen.StudentSignUpFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentSignUpFragment"
         android:label="fragment_student_sign_up"
         tools:layout="@layout/fragment_student_sign_up" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.android.digiteen.SignUpFragment"
+        android:name="com.example.android.digiteen.View.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_studentLandingFragment"
+            app:destination="@id/studentLandingFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_ownerLandingFragment"
+            app:destination="@id/ownerLandingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerSignUp"
+        android:name="com.example.android.digiteen.View.Owner.OwnerSignUpFragment"
+        android:label="fragment_owner_sign_up"
+        tools:layout="@layout/fragment_owner_sign_up" />
+    <fragment
+        android:id="@+id/studentLandingFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentLandingFragment"
+        android:label="fragment_student_landing"
+        tools:layout="@layout/fragment_student_landing" >
+        <action
+            android:id="@+id/action_studentLandingFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_studentLandingFragment_to_studentchooseCanteenFragment"
+            app:destination="@id/studentchooseCanteenFragment" />
+        <action
+            android:id="@+id/action_studentLandingFragment_to_studentOrderListFragment"
+            app:destination="@id/studentOrderListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerLandingFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerLandingFragment"
+        android:label="fragment_owner_landing"
+        tools:layout="@layout/fragment_owner_landing" >
+        <action
+            android:id="@+id/action_ownerLandingFragment_to_loginFragment2"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentchooseCanteenFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentchooseCanteenFragment"
+        android:label="fragment_studentchoose_canteen"
+        tools:layout="@layout/fragment_studentchoose_canteen" >
+        <action
+            android:id="@+id/action_studentchooseCanteenFragment_to_studentSelectItemFragment"
+            app:destination="@id/studentSelectItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentSelectItemFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentSelectItemFragment"
+        android:label="fragment_student_select_item"
+        tools:layout="@layout/fragment_student_select_item" >
+        <action
+            android:id="@+id/action_studentSelectItemFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.example.android.digiteen.View.Student.OrderDetailFragment"
+        android:label="fragment_order_detail"
+        tools:layout="@layout/fragment_order_detail" />
+    <fragment
+        android:id="@+id/studentOrderListFragment"
+        android:name="com.example.android.digiteen.View.Student.StudentOrderListFragment"
+        android:label="fragment_student_order_list"
+        tools:layout="@layout/fragment_student_order_list" >
+        <action
+            android:id="@+id/action_studentOrderListFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
 
 </navigation>

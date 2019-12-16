@@ -4,75 +4,96 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".StudentSignUpFragment">
+    tools:context=".View.Student.StudentSignUpFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="40dp"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="24dp">
+        android:paddingRight="24dp">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/login">
-
-    </ImageView>
-
-    <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/student_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/fullname"
         android:layout_marginBottom="20dp"
         android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/student_enroll"
         android:layout_width="match_parent"
         android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
         android:hint="@string/enrollment_number"
         android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/student_hostel"
         android:layout_width="match_parent"
         android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
         android:hint="@string/hostel"
         android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/student_number"
         android:layout_width="match_parent"
         android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
         android:hint="@string/mobile_number"
         android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/student_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:hint="@string/email_id"
         android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/student_password"
         android:layout_width="match_parent"
         android:layout_marginBottom="20dp"
         android:layout_height="wrap_content"
-        android:hint="@string/password"
+        android:hint="@string/studentpassword"
         android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/signUp_btn"
+        android:id="@+id/student_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:padding="12dp"
-        android:text="REGISTER"
+        android:text="@string/register"
         android:background="@drawable/rnd_bttn"
         android:textStyle="bold"
         android:textSize="20sp"/>
