@@ -65,6 +65,12 @@
         <action
             android:id="@+id/action_ownerLandingFragment_to_loginFragment2"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_ownerLandingFragment_to_ownerOrderSummaryFragment"
+            app:destination="@id/ownerOrderSummaryFragment" />
+        <action
+            android:id="@+id/action_ownerLandingFragment_to_ownerMenuFragment"
+            app:destination="@id/ownerMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/studentchooseCanteenFragment"
@@ -98,5 +104,15 @@
             android:id="@+id/action_studentOrderListFragment_to_orderDetailFragment"
             app:destination="@id/orderDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/ownerOrderSummaryFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerOrderSummaryFragment"
+        android:label="fragment_owner_order_summary"
+        tools:layout="@layout/fragment_owner_order_summary" />
+    <fragment
+        android:id="@+id/ownerMenuFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerMenuFragment"
+        android:label="fragment_owner_menu"
+        tools:layout="@layout/fragment_owner_menu" />
 
 </navigation>

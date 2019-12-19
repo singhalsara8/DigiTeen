@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class OwnerLandingFragment extends Fragment {
     private Button button;
+    private Button order,menu;
     private FirebaseAuth fauth;
     private NavController navController;
 
@@ -40,6 +41,8 @@ public class OwnerLandingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        order=view.findViewById(R.id.owner_order);
+        menu=view.findViewById(R.id.owner_menu);
         button=view.findViewById(R.id.owner_logout);
         fauth=FirebaseAuth.getInstance();
         navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
@@ -49,6 +52,18 @@ public class OwnerLandingFragment extends Fragment {
                 fauth.signOut();
                 NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerLandingFragment, true).build();
                 navController.navigate(R.id.action_ownerLandingFragment_to_loginFragment2,null,navOptions);
+            }
+        });
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_ownerLandingFragment_to_ownerOrderSummaryFragment);
+            }
+        });
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.action_ownerLandingFragment_to_ownerMenuFragment);
             }
         });
     }

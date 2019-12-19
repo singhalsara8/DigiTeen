@@ -29,4 +29,7 @@
     <string name="token_number">Token Number:</string>
     <string name="order_summary">Order Summary</string>
     <string name="quantity_ordered">Quantity Ordered</string>
+    <string name="orders">ORDERS</string>
+    <string name="menu">MENU</string>
+    <string name="signout">signout</string>
 </resources>
