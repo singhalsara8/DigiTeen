@@ -43,6 +43,7 @@ public class StudentSelectItemFragment extends Fragment {
     private String bhawan;
     private RecyclerView recyclerView;
     private MenuAdapter menuAdapter;
+    private Total total;
     private NavController navController;
     private Button bttn;
     private ProgressDialog progressDialog;
@@ -107,7 +108,7 @@ public class StudentSelectItemFragment extends Fragment {
                         menuAdapter.notifyDataSetChanged();
                     }
                     progressDialog.dismiss();
-                    Total total = new Total(0);
+                    total = new Total(0);
                     SelectMenu selectMenu1 = new SelectMenu(SelectMenu.TOTAL_TYPE, total);
                     list.add(selectMenu1);
                     menuAdapter.notifyDataSetChanged();
@@ -146,6 +147,9 @@ public class StudentSelectItemFragment extends Fragment {
 
                         }
                         reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("status").setValue("Payment Pending");
+                        reference.child("bhawan").child(bhawan).child("status").child("Payment Pending").child(token).setValue(selectMenus.get(selectMenus.size()-1).getTotal().getMtotalvalue());
+                        reference.child("bhawan").child(bhawan).child("order").child(token).child("status").setValue("Payment Pending");
+                        reference.child("bhawan").child(bhawan).child("order").child(token).child("ordered by").setValue(firebaseAuth.getCurrentUser().getUid());
                         bundle.putString("token",token);
                         NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.studentLandingFragment,false).build();
                         navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment,bundle,navOptions);

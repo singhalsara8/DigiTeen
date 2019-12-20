@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/orderDetailFragment"
-        android:name="com.example.android.digiteen.View.Student.OrderDetailFragment"
+        android:name="com.example.android.digiteen.View.OrderDetailFragment"
         android:label="fragment_order_detail"
         tools:layout="@layout/fragment_order_detail" />
     <fragment
@@ -106,13 +106,37 @@
     </fragment>
     <fragment
         android:id="@+id/ownerOrderSummaryFragment"
-        android:name="com.example.android.digiteen.View.Owner.OwnerOrderSummaryFragment"
+        android:name="com.example.android.digiteen.View.OwnerOrderSummaryFragment"
         android:label="fragment_owner_order_summary"
         tools:layout="@layout/fragment_owner_order_summary" />
     <fragment
         android:id="@+id/ownerMenuFragment"
         android:name="com.example.android.digiteen.View.Owner.OwnerMenuFragment"
         android:label="fragment_owner_menu"
-        tools:layout="@layout/fragment_owner_menu" />
+        tools:layout="@layout/fragment_owner_menu" >
+        <action
+            android:id="@+id/action_ownerMenuFragment_to_ownerAddItemFragment"
+            app:destination="@id/ownerAddItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ownerAddItemFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerAddItemFragment"
+        android:label="fragment_owner_add_item"
+        tools:layout="@layout/fragment_owner_add_item" />
+    <fragment
+        android:id="@+id/paymentPendingFragment"
+        android:name="com.example.android.digiteen.View.Owner.PaymentPendingFragment"
+        android:label="fragment_payment_pending"
+        tools:layout="@layout/fragment_payment_pending" />
+    <fragment
+        android:id="@+id/acceptedOrderFragment"
+        android:name="com.example.android.digiteen.View.Owner.AcceptedOrderFragment"
+        android:label="fragment_accepted_order"
+        tools:layout="@layout/fragment_accepted_order" />
+    <fragment
+        android:id="@+id/completedOrderFragment"
+        android:name="com.example.android.digiteen.View.Owner.CompletedOrderFragment"
+        android:label="fragment_completed_order"
+        tools:layout="@layout/fragment_completed_order" />
 
 </navigation>

@@ -32,4 +32,5 @@
     <string name="orders">ORDERS</string>
     <string name="menu">MENU</string>
     <string name="signout">signout</string>
+    <string name="add_items">ADD ITEMS</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.android.digiteen.View.Student;
+package com.example.android.digiteen.View;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
