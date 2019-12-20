@@ -1,6 +1,7 @@
 package com.example.android.digiteen.Adapter;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -137,6 +138,9 @@ public class PaymentPendingAdapter extends RecyclerView.Adapter<PaymentPendingAd
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     uid = dataSnapshot.child("ordered by").getValue(String.class);
+                                    databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Declined").child(token).setValue(total);
+                                    databaseReference.child("bhawan").child(ownerBhawan).child("order").child(token).child("status").setValue("Declined");
+                                    databaseReference.child("user").child(uid).child("order").child(token).child("status").setValue("Declined");
                                     databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Payment Pending").child(token).removeValue();
                                     databaseReference.child("bhawan").child(ownerBhawan).child("order").child(token).child("status").child("Payment Pending").removeValue();
                                     databaseReference.child("user").child(uid).child("order").child(token).child("status").child("Payment Pending").removeValue();

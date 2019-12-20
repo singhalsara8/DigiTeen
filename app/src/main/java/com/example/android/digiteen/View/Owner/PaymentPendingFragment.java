@@ -1,5 +1,6 @@
 package com.example.android.digiteen.View.Owner;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class PaymentPendingFragment extends Fragment {
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
     private String ownerbhawan;
+    private ProgressDialog progressDialog;
 
     public PaymentPendingFragment() {
         // Required empty public constructor
@@ -63,6 +65,10 @@ public class PaymentPendingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         recyclerView=view.findViewById(R.id.owner_payment_pending_list_recyclerview);
         databaseReference= FirebaseDatabase.getInstance().getReference();
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
         DatabaseReference reference=databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -84,6 +90,7 @@ public class PaymentPendingFragment extends Fragment {
                                 list.add(new PaymentPending(readdata.getKey(),Integer.parseInt(readdata.getValue().toString())));
                                 paymentPendingAdapter.notifyDataSetChanged();
                             }
+                            progressDialog.dismiss();
                             RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                             recyclerView.setLayoutManager(linearLayoutManager);
                             recyclerView.setAdapter(paymentPendingAdapter);
