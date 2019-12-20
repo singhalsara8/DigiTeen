@@ -1,14 +1,19 @@
 package com.example.android.digiteen.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.digiteen.Model.PaymentPending;
@@ -30,10 +35,14 @@ public class PaymentPendingAdapter extends RecyclerView.Adapter<PaymentPendingAd
     private DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
     private DatabaseReference reference1=FirebaseDatabase.getInstance().getReference();
     private String ownerBhawan, uid;
+    private Bundle bundle;
+    private NavController navController;
+    private Activity activity;
 
-    public PaymentPendingAdapter(List<PaymentPending> list, Context context) {
+    public PaymentPendingAdapter(List<PaymentPending> list, Context context,Activity activity) {
         this.list = list;
         this.context = context;
+        this.activity=activity;
     }
 
     @NonNull
@@ -46,9 +55,18 @@ public class PaymentPendingAdapter extends RecyclerView.Adapter<PaymentPendingAd
 
     @Override
     public void onBindViewHolder(@NonNull PaymentPendingViewHolder holder, int position) {
-        PaymentPending paymentPending=list.get(position);
+        final PaymentPending paymentPending=list.get(position);
         holder.mtoken.setText(paymentPending.getOwner_token_number());
-        holder.mtotal.setText(String.valueOf(paymentPending.getOwner_grand_total()));
+        holder.mtotal.setText(paymentPending.getOwner_grand_total()+"₹");
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle=new Bundle();
+                bundle.putString("tokenNumber",paymentPending.getOwner_token_number());
+                navController= Navigation.findNavController(activity,R.id.my_nav_host_fragment);
+                navController.navigate(R.id.action_ownerOrderSummaryFragment_to_ownerOrderDetailFragment,bundle);
+            }
+        });
     }
 
     @Override
@@ -59,8 +77,10 @@ public class PaymentPendingAdapter extends RecyclerView.Adapter<PaymentPendingAd
     public class PaymentPendingViewHolder extends RecyclerView.ViewHolder{
         private TextView mtoken, mtotal;
         private ImageButton mdone,mclear;
+        private RelativeLayout relativeLayout;
         private PaymentPendingViewHolder(View view){
             super(view);
+            relativeLayout=view.findViewById(R.id.payment_pending_layout);
             mtotal=view.findViewById(R.id.owner_grand_total);
             mtoken=view.findViewById(R.id.owner_token_number);
             mdone=view.findViewById(R.id.owner_done);
@@ -84,7 +104,7 @@ public class PaymentPendingAdapter extends RecyclerView.Adapter<PaymentPendingAd
                                     databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Approved").child(token).setValue(total);
                                     databaseReference.child("bhawan").child(ownerBhawan).child("order").child(token).child("status").setValue("Approved");
                                     databaseReference.child("user").child(uid).child("order").child(token).child("status").setValue("Approved");
-                                    databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Payment Pending").removeValue();
+                                    databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Payment Pending").child(token).removeValue();
                                     databaseReference.child("bhawan").child(ownerBhawan).child("order").child(token).child("status").child("Payment Pending").removeValue();
                                     databaseReference.child("user").child(uid).child("order").child(token).child("status").child("Payment Pending").removeValue();
                                 }
@@ -117,7 +137,7 @@ public class PaymentPendingAdapter extends RecyclerView.Adapter<PaymentPendingAd
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     uid = dataSnapshot.child("ordered by").getValue(String.class);
-                                    databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Payment Pending").removeValue();
+                                    databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Payment Pending").child(token).removeValue();
                                     databaseReference.child("bhawan").child(ownerBhawan).child("order").child(token).child("status").child("Payment Pending").removeValue();
                                     databaseReference.child("user").child(uid).child("order").child(token).child("status").child("Payment Pending").removeValue();
                                 }

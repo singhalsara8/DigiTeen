@@ -76,7 +76,7 @@ public class AcceptedOrderFragment extends Fragment {
                         if(dataSnapshot!=null)
                         {
                             list = new ArrayList<>();
-                            approvedOrderAdapter = new ApprovedOrderAdapter(getContext(),list);
+                            approvedOrderAdapter = new ApprovedOrderAdapter(getContext(),list,getActivity());
                             DataSnapshot dataSnapshot1=dataSnapshot.child(ownerbhawan).child("status").child("Approved");
                             for (DataSnapshot readdata : dataSnapshot1.getChildren())
                             {

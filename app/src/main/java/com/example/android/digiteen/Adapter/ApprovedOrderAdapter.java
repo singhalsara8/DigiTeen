@@ -1,13 +1,18 @@
 package com.example.android.digiteen.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.digiteen.Model.PaymentPending;
@@ -23,6 +28,7 @@ import java.util.List;
 
 public class ApprovedOrderAdapter extends RecyclerView.Adapter<ApprovedOrderAdapter.ApprovedOrderViewHolder> {
     private Context context;
+    private Activity activity;
     private List<PaymentPending> list;
     private String token;
     private int total;
@@ -31,10 +37,13 @@ public class ApprovedOrderAdapter extends RecyclerView.Adapter<ApprovedOrderAdap
     private DatabaseReference reference=FirebaseDatabase.getInstance().getReference();
     private DatabaseReference reference1=FirebaseDatabase.getInstance().getReference();
     private String ownerBhawan, uid;
+    private Bundle bundle;
+    private NavController navController;
 
-    public ApprovedOrderAdapter(Context context, List<PaymentPending> list) {
+    public ApprovedOrderAdapter(Context context, List<PaymentPending> list, Activity activity) {
         this.context = context;
         this.list = list;
+        this.activity=activity;
     }
 
     @NonNull
@@ -47,9 +56,18 @@ public class ApprovedOrderAdapter extends RecyclerView.Adapter<ApprovedOrderAdap
 
     @Override
     public void onBindViewHolder(@NonNull ApprovedOrderViewHolder holder, int position) {
-        PaymentPending approved=list.get(position);
+        final PaymentPending approved=list.get(position);
         holder.approved_token.setText(approved.getOwner_token_number());
-        holder.aprroved_total.setText(String.valueOf(approved.getOwner_grand_total()));
+        holder.aprroved_total.setText(approved.getOwner_grand_total()+"₹");
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle=new Bundle();
+                bundle.putString("tokenNumber",approved.getOwner_token_number());
+                navController= Navigation.findNavController(activity,R.id.my_nav_host_fragment);
+                navController.navigate(R.id.action_ownerOrderSummaryFragment_to_ownerOrderDetailFragment,bundle);
+            }
+        });
     }
 
     @Override
@@ -60,9 +78,11 @@ public class ApprovedOrderAdapter extends RecyclerView.Adapter<ApprovedOrderAdap
     public class ApprovedOrderViewHolder extends RecyclerView.ViewHolder{
         TextView approved_token, aprroved_total;
         ImageButton approved_done;
+        RelativeLayout relativeLayout;
         private ApprovedOrderViewHolder(View view)
         {
             super(view);
+            relativeLayout=view.findViewById(R.id.approved_order_layout);
             approved_token=view.findViewById(R.id.owner_approvedorder_token_number);
             aprroved_total=view.findViewById(R.id.owner_approvedorder_grand_total);
             approved_done=view.findViewById(R.id.owner_approvedorder_done);
@@ -84,7 +104,7 @@ public class ApprovedOrderAdapter extends RecyclerView.Adapter<ApprovedOrderAdap
                                     databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Completed").child(token).setValue(total);
                                     databaseReference.child("bhawan").child(ownerBhawan).child("order").child(token).child("status").setValue("Completed");
                                     databaseReference.child("user").child(uid).child("order").child(token).child("status").setValue("Completed");
-                                    databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Approved").removeValue();
+                                    databaseReference.child("bhawan").child(ownerBhawan).child("status").child("Approved").child(token).removeValue();
                                     databaseReference.child("bhawan").child(ownerBhawan).child("order").child(token).child("status").child("Approved").removeValue();
                                     databaseReference.child("user").child(uid).child("order").child(token).child("status").child("Approved").removeValue();
                                 }

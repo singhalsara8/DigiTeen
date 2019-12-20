@@ -108,7 +108,11 @@
         android:id="@+id/ownerOrderSummaryFragment"
         android:name="com.example.android.digiteen.View.OwnerOrderSummaryFragment"
         android:label="fragment_owner_order_summary"
-        tools:layout="@layout/fragment_owner_order_summary" />
+        tools:layout="@layout/fragment_owner_order_summary" >
+        <action
+            android:id="@+id/action_ownerOrderSummaryFragment_to_ownerOrderDetailFragment"
+            app:destination="@id/ownerOrderDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ownerMenuFragment"
         android:name="com.example.android.digiteen.View.Owner.OwnerMenuFragment"
@@ -138,5 +142,10 @@
         android:name="com.example.android.digiteen.View.Owner.CompletedOrderFragment"
         android:label="fragment_completed_order"
         tools:layout="@layout/fragment_completed_order" />
+    <fragment
+        android:id="@+id/ownerOrderDetailFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerOrderDetailFragment"
+        android:label="fragment_owner_order_detail"
+        tools:layout="@layout/fragment_owner_order_detail" />
 
 </navigation>

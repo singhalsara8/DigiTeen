@@ -74,7 +74,7 @@ public class CompletedOrderFragment extends Fragment {
                     public void onChanged(DataSnapshot dataSnapshot) {
                         if (dataSnapshot != null) {
                             list = new ArrayList<>();
-                            completedOrderAdapter = new CompletedOrderAdapter(getContext(), list);
+                            completedOrderAdapter = new CompletedOrderAdapter(getContext(), list,getActivity());
                             DataSnapshot dataSnapshot1 = dataSnapshot.child(ownerbhawan).child("status").child("Completed");
                             for (DataSnapshot readdata : dataSnapshot1.getChildren()) {
                                 list.add(new PaymentPending(readdata.getKey(), Integer.parseInt(readdata.getValue().toString())));

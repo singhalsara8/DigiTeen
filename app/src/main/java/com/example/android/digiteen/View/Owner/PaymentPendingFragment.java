@@ -77,7 +77,7 @@ public class PaymentPendingFragment extends Fragment {
                         if(dataSnapshot!=null)
                         {
                             list = new ArrayList<>();
-                            paymentPendingAdapter = new PaymentPendingAdapter(list, getContext());
+                            paymentPendingAdapter = new PaymentPendingAdapter(list, getContext(),getActivity());
                             DataSnapshot dataSnapshot1=dataSnapshot.child(ownerbhawan).child("status").child("Payment Pending");
                             for (DataSnapshot readdata : dataSnapshot1.getChildren())
                             {
