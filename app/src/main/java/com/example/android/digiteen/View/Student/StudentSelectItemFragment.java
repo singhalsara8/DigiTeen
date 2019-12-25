@@ -77,17 +77,17 @@ public class StudentSelectItemFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        cm= (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        bundle=new Bundle();
-        selectMenus=new ArrayList<>();
-        menuItems=new ArrayList<>();
-        firebaseAuth=FirebaseAuth.getInstance();
-        reference= FirebaseDatabase.getInstance().getReference();
+        bundle = new Bundle();
+        selectMenus = new ArrayList<>();
+        menuItems = new ArrayList<>();
+        firebaseAuth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference();
         bttn = view.findViewById(R.id.place_order);
         navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
         bhawan = getArguments().getString("list");
         recyclerView = view.findViewById(R.id.select_item_recyclerview);
         Log.d("bhawan", bhawan);
-        progressDialog=new ProgressDialog(getContext());
+        progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
@@ -121,25 +121,22 @@ public class StudentSelectItemFragment extends Fragment {
         bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setMessage("Do you want to confirm order");
                 builder.setTitle("CONFIRMATION");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyMMddHHmmss");
-                        token=simpleDateFormat.format(new Date());
-                        Log.d("timestamp",token);
-                        selectMenus=menuAdapter.getList();
-                        for (int j=0; j<selectMenus.size()-1; j++)
-                        {
-                            if(selectMenus.get(j).getMenuItem().getMnumber()!=0)
-                            {
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyMMddHHmmss");
+                        token = simpleDateFormat.format(new Date());
+                        Log.d("timestamp", token);
+                        selectMenus = menuAdapter.getList();
+                        for (int j = 0; j < selectMenus.size() - 1; j++) {
+                            if (selectMenus.get(j).getMenuItem().getMnumber() != 0) {
                                 menuItems.add(selectMenus.get(j).getMenuItem());
                             }
                         }
-                        for(int k=0; k<menuItems.size();k++)
-                        {
+                        for (int k = 0; k < menuItems.size(); k++) {
                             reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("price").setValue(menuItems.get(k).getMamount());
                             reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("quantity").setValue(menuItems.get(k).getMnumber());
                             reference.child("bhawan").child(bhawan).child("order").child(token).child("item").child(menuItems.get(k).getMitem()).child("price").setValue(menuItems.get(k).getMamount());
@@ -147,12 +144,12 @@ public class StudentSelectItemFragment extends Fragment {
 
                         }
                         reference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("order").child(token).child("status").setValue("Payment Pending");
-                        reference.child("bhawan").child(bhawan).child("status").child("Payment Pending").child(token).setValue(selectMenus.get(selectMenus.size()-1).getTotal().getMtotalvalue());
+                        reference.child("bhawan").child(bhawan).child("status").child("Payment Pending").child(token).setValue(selectMenus.get(selectMenus.size() - 1).getTotal().getMtotalvalue());
                         reference.child("bhawan").child(bhawan).child("order").child(token).child("status").setValue("Payment Pending");
                         reference.child("bhawan").child(bhawan).child("order").child(token).child("ordered by").setValue(firebaseAuth.getCurrentUser().getUid());
-                        bundle.putString("token",token);
-                        NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.studentLandingFragment,false).build();
-                        navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment,bundle,navOptions);
+                        bundle.putString("token", token);
+                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.studentLandingFragment, false).build();
+                        navController.navigate(R.id.action_studentSelectItemFragment_to_orderDetailFragment, bundle, navOptions);
                     }
                 });
                 builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
