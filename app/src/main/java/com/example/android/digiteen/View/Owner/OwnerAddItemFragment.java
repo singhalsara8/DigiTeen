@@ -1,38 +1,35 @@
 package com.example.android.digiteen.View.Owner;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
-import com.example.android.digiteen.Adapter.AddItemAdapter;
-import com.example.android.digiteen.Model.AddMenuItem;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.example.android.digiteen.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class OwnerAddItemFragment extends Fragment {
     private Button button;
-    private DatabaseReference databaseReference;
-    private List<AddMenuItem> menuItemList;
+    private DatabaseReference databaseReference, reference;
     private FirebaseAuth firebaseAuth;
-    private AddItemAdapter addItemAdapter;
-    private RecyclerView recyclerView;
+    private EditText itemname, itemprice;
+    private String ownerbhawan;
+    private NavController navController;
 
     public OwnerAddItemFragment() {
         // Required empty public constructor
@@ -53,16 +50,32 @@ public class OwnerAddItemFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        button=view.findViewById(R.id.owner_add_item_button);
-        firebaseAuth=FirebaseAuth.getInstance();
-        databaseReference= FirebaseDatabase.getInstance().getReference();
-        recyclerView=view.findViewById(R.id.owner_add_item_recyclerview);
-        menuItemList=new ArrayList<>();
-        addItemAdapter=new AddItemAdapter(getContext(),menuItemList);
-        menuItemList.add(new AddMenuItem("maggi", 20));
-        addItemAdapter.notifyDataSetChanged();
-        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(addItemAdapter);
+        itemname = view.findViewById(R.id.owner_itemname);
+        itemprice = view.findViewById(R.id.owner_itemprice);
+        button = view.findViewById(R.id.owner_upload_item_button);
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        reference = FirebaseDatabase.getInstance().getReference();
+        navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reference = databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ownerbhawan = dataSnapshot.getValue(String.class);
+                        Log.d("bhawan", ownerbhawan);
+                        databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemname.getText().toString()).setValue(Integer.parseInt(itemprice.getText().toString()));
+                        navController.navigate(R.id.action_ownerAddItemFragment_to_ownerMenuFragment);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
     }
 }

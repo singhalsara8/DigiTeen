@@ -10,18 +10,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="@string/add_items"
+        android:text="@string/add_item"
         android:textSize="30sp"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/owner_add_item_recyclerview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textAlignment="center"
+            android:text="Name"
+            android:id="@+id/item_name_text"
+            android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/item_name_text"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="140dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/owner_itemname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#242424"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_marginEnd="85dp"
+            android:layout_marginStart="60dp"
+            android:layout_alignParentEnd="true"
+            android:text="Price"
+            android:textAlignment="center"
+            android:id="@+id/item_price_text"
+            android:textSize="18sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="40dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/owner_itemprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="#242424"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
 
     <Button
-        android:id="@+id/owner_add_item_button"
+        android:id="@+id/owner_upload_item_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -29,7 +84,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/rnd_bttn"
         android:padding="12dp"
-        android:text="@string/add_items"
+        android:text="@string/upload_item"
         android:textSize="20sp"
         android:textStyle="bold" />
 

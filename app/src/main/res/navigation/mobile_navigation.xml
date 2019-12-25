@@ -126,7 +126,11 @@
         android:id="@+id/ownerAddItemFragment"
         android:name="com.example.android.digiteen.View.Owner.OwnerAddItemFragment"
         android:label="fragment_owner_add_item"
-        tools:layout="@layout/fragment_owner_add_item" />
+        tools:layout="@layout/fragment_owner_add_item" >
+        <action
+            android:id="@+id/action_ownerAddItemFragment_to_ownerMenuFragment"
+            app:destination="@id/ownerMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/paymentPendingFragment"
         android:name="com.example.android.digiteen.View.Owner.PaymentPendingFragment"
