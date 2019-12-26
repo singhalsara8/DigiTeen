@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerOrderSummaryFragment"
-        android:name="com.example.android.digiteen.View.OwnerOrderSummaryFragment"
+        android:name="com.example.android.digiteen.View.Owner.OwnerOrderSummaryFragment"
         android:label="fragment_owner_order_summary"
         tools:layout="@layout/fragment_owner_order_summary" >
         <action

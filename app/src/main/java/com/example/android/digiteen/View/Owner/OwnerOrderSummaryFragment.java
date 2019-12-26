@@ -1,4 +1,4 @@
-package com.example.android.digiteen.View;
+package com.example.android.digiteen.View.Owner;
 
 import android.content.Context;
 import android.net.Uri;

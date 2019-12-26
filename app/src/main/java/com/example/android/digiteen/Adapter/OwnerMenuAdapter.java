@@ -48,7 +48,7 @@ public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.Owne
     public void onBindViewHolder(@NonNull OwnerMenuViewHolder holder, final int position) {
         final OwnerMenu ownerMenu = ownerMenus.get(position);
         holder.itemname.setText(ownerMenu.getItemname());
-        holder.itemprice.setText(String.valueOf(ownerMenu.getItemprice()));
+        holder.itemprice.setText(ownerMenu.getItemprice()+"₹");
     }
 
     @Override
