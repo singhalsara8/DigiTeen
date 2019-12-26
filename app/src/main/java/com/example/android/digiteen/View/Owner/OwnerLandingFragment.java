@@ -1,5 +1,6 @@
 package com.example.android.digiteen.View.Owner;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class OwnerLandingFragment extends Fragment {
     private Button button;
-    private Button order,menu;
+    private Button order, menu;
     private FirebaseAuth fauth;
     private NavController navController;
-    private DatabaseReference databaseReference,reference;
+    private DatabaseReference databaseReference, reference;
     private String ownerbhawan;
+    private ProgressDialog progressDialog;
 
     public OwnerLandingFragment() {
         // Required empty public constructor
@@ -53,21 +55,21 @@ public class OwnerLandingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        order=view.findViewById(R.id.owner_order);
-        menu=view.findViewById(R.id.owner_menu);
-        button=view.findViewById(R.id.owner_logout);
-        fauth=FirebaseAuth.getInstance();
-        databaseReference= FirebaseDatabase.getInstance().getReference();
-        reference=FirebaseDatabase.getInstance().getReference();
-        navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
-        BhawanDataViewModel bhawanDataViewModel= ViewModelProviders.of(getActivity()).get(BhawanDataViewModel.class);
-        final LiveData<DataSnapshot> liveData=bhawanDataViewModel.getdatasnapshotlivedata();
+        order = view.findViewById(R.id.owner_order);
+        menu = view.findViewById(R.id.owner_menu);
+        button = view.findViewById(R.id.owner_logout);
+        fauth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        reference = FirebaseDatabase.getInstance().getReference();
+        navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
+        BhawanDataViewModel bhawanDataViewModel = ViewModelProviders.of(getActivity()).get(BhawanDataViewModel.class);
+        final LiveData<DataSnapshot> liveData = bhawanDataViewModel.getdatasnapshotlivedata();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fauth.signOut();
                 NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerLandingFragment, true).build();
-                navController.navigate(R.id.action_ownerLandingFragment_to_loginFragment2,null,navOptions);
+                navController.navigate(R.id.action_ownerLandingFragment_to_loginFragment2, null, navOptions);
             }
         });
         menu.setOnClickListener(new View.OnClickListener() {
@@ -76,35 +78,38 @@ public class OwnerLandingFragment extends Fragment {
                 navController.navigate(R.id.action_ownerLandingFragment_to_ownerMenuFragment);
             }
         });
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               reference=databaseReference.child("user").child(fauth.getCurrentUser().getUid()).child("profile").child("bhawan");
-               reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                   @Override
-                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                       ownerbhawan=dataSnapshot.getValue(String.class);
-                       liveData.observe(getViewLifecycleOwner(), new Observer<DataSnapshot>() {
-                           @Override
-                           public void onChanged(DataSnapshot dataSnapshot) {
-                               DataSnapshot dataSnapshot1=dataSnapshot.child(ownerbhawan);
-                                   if(dataSnapshot1.hasChild("Menu"))
-                                   {
-                                       navController.navigate(R.id.action_ownerLandingFragment_to_ownerOrderSummaryFragment);
-                                   }
-                                   else
-                                   {
-                                       Toast.makeText(getContext(),"Upload menu first", Toast.LENGTH_SHORT).show();
-                                   }
-                           }
-                       });
-                   }
+                progressDialog.show();
+                reference = databaseReference.child("user").child(fauth.getCurrentUser().getUid()).child("profile").child("bhawan");
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        ownerbhawan = dataSnapshot.getValue(String.class);
+                        liveData.observe(getViewLifecycleOwner(), new Observer<DataSnapshot>() {
+                            @Override
+                            public void onChanged(DataSnapshot dataSnapshot) {
+                                DataSnapshot dataSnapshot1 = dataSnapshot.child(ownerbhawan);
+                                if (dataSnapshot1.hasChild("Menu")) {
+                                    progressDialog.dismiss();
+                                    navController.navigate(R.id.action_ownerLandingFragment_to_ownerOrderSummaryFragment);
+                                } else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getContext(), "Upload menu first", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
 
-                   @Override
-                   public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                   }
-               });
+                    }
+                });
             }
         });
     }
