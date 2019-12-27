@@ -1,15 +1,12 @@
 package com.example.android.digiteen.Adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.digiteen.Model.OwnerMenu;
@@ -56,52 +53,76 @@ public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.Owne
         return ownerMenus.size();
     }
 
+    public List<OwnerMenu> getList(){
+        return ownerMenus;
+    }
+
+    public void removeItem(final int position){
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference = databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ownerbhawan = dataSnapshot.getValue(String.class);
+                itemName = ownerMenus.get(position).getItemname();
+                databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemName).removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public class OwnerMenuViewHolder extends RecyclerView.ViewHolder {
         private TextView itemname, itemprice;
-        private ImageButton button;
+ //       private ImageButton button;
 
         private OwnerMenuViewHolder(View view) {
             super(view);
             itemname = view.findViewById(R.id.owner_menu_itemname);
             itemprice = view.findViewById(R.id.owner_menu_itemprice);
-            button = view.findViewById(R.id.owner_clear_menuitem);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("CONFIRMATION");
-                    builder.setMessage("Do you want to remove item from menu?");
-                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            firebaseAuth = FirebaseAuth.getInstance();
-                            databaseReference = FirebaseDatabase.getInstance().getReference();
-                            reference = FirebaseDatabase.getInstance().getReference();
-                            reference = databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");
-                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    ownerbhawan = dataSnapshot.getValue(String.class);
-                                    itemName = ownerMenus.get(getAdapterPosition()).getItemname();
-                                    databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemName).removeValue();
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    });
-                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    });
-                    builder.show();
-                }
-            });
+//            button = view.findViewById(R.id.owner_clear_menuitem);
+//            button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                    builder.setTitle("CONFIRMATION");
+//                    builder.setMessage("Do you want to remove item from menu?");
+//                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            firebaseAuth = FirebaseAuth.getInstance();
+//                            databaseReference = FirebaseDatabase.getInstance().getReference();
+//                            reference = FirebaseDatabase.getInstance().getReference();
+//                            reference = databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");
+//                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                    ownerbhawan = dataSnapshot.getValue(String.class);
+//                                    itemName = ownerMenus.get(getAdapterPosition()).getItemname();
+//                                    databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemName).removeValue();
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                }
+//                            });
+//                        }
+//                    });
+//                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                        }
+//                    });
+//                    builder.show();
+//                }
+//            });
         }
 
     }

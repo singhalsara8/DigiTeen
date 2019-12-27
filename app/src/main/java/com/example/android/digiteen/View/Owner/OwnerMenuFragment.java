@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import android.widget.Button;
 import com.example.android.digiteen.Adapter.OwnerMenuAdapter;
 import com.example.android.digiteen.Model.OwnerMenu;
 import com.example.android.digiteen.R;
+import com.example.android.digiteen.SwipeToDelete;
 import com.example.android.digiteen.ViewModel.BhawanDataViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -96,6 +98,7 @@ public class OwnerMenuFragment extends Fragment {
                             Log.d("check", ownerMenus.toString());
                         }
                         progressDialog.dismiss();
+                        enableSwipeToDelete();
                         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                         recyclerView.setLayoutManager(linearLayoutManager);
                         recyclerView.setAdapter(adapter);
@@ -115,5 +118,17 @@ public class OwnerMenuFragment extends Fragment {
             }
         });
 
+    }
+
+    private void enableSwipeToDelete(){
+        SwipeToDelete swipeToDelete=new SwipeToDelete(getContext()) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+               final int position=viewHolder.getAdapterPosition();
+               adapter.removeItem(position);
+            }
+        };
+        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(swipeToDelete);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 }
