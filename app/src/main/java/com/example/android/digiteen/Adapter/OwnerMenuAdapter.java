@@ -27,6 +27,7 @@ public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.Owne
     private DatabaseReference databaseReference, reference;
     private String ownerbhawan;
     private String itemName;
+    private int itemPrice;
 
     public OwnerMenuAdapter(List<OwnerMenu> ownerMenus, Context context) {
         this.ownerMenus = ownerMenus;
@@ -68,6 +69,27 @@ public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.Owne
                 ownerbhawan = dataSnapshot.getValue(String.class);
                 itemName = ownerMenus.get(position).getItemname();
                 databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemName).removeValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void restoreItem(final OwnerMenu item){
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference = databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ownerbhawan = dataSnapshot.getValue(String.class);
+                itemName = item.getItemname();
+                itemPrice=item.getItemprice();
+                databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemName).setValue(itemPrice);
             }
 
             @Override

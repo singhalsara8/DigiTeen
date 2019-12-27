@@ -2,11 +2,13 @@ package com.example.android.digiteen.View.Owner;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -22,12 +24,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.android.digiteen.Adapter.OwnerMenuAdapter;
 import com.example.android.digiteen.Model.OwnerMenu;
 import com.example.android.digiteen.R;
 import com.example.android.digiteen.SwipeToDelete;
 import com.example.android.digiteen.ViewModel.BhawanDataViewModel;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,6 +54,7 @@ public class OwnerMenuFragment extends Fragment {
     private String ownerbhawan;
     private ProgressDialog progressDialog;
     private NavController navController;
+    private CoordinatorLayout coordinatorLayout;
 
     public OwnerMenuFragment() {
         // Required empty public constructor
@@ -69,6 +75,7 @@ public class OwnerMenuFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        coordinatorLayout=view.findViewById(R.id.ownerMenuCoordinatorLayout);
         navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -125,7 +132,18 @@ public class OwnerMenuFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                final int position=viewHolder.getAdapterPosition();
+               final OwnerMenu item=adapter.getList().get(position);
                adapter.removeItem(position);
+
+                Snackbar snackbar=Snackbar.make(coordinatorLayout,"Item was removed from the list.", BaseTransientBottomBar.LENGTH_LONG);
+                snackbar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        adapter.restoreItem(item);
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
             }
         };
         ItemTouchHelper itemTouchHelper=new ItemTouchHelper(swipeToDelete);
