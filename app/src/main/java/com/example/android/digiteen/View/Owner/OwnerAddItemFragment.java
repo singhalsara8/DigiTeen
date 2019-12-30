@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.example.android.digiteen.R;
@@ -67,7 +68,8 @@ public class OwnerAddItemFragment extends Fragment {
                         ownerbhawan = dataSnapshot.getValue(String.class);
                         Log.d("bhawan", ownerbhawan);
                         databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemname.getText().toString()).setValue(Integer.parseInt(itemprice.getText().toString()));
-                        navController.navigate(R.id.action_ownerAddItemFragment_to_ownerMenuFragment);
+                        NavOptions navOptions=new NavOptions.Builder().setPopUpTo(R.id.ownerMenuFragment,true).build();
+                        navController.navigate(R.id.action_ownerAddItemFragment_to_ownerMenuFragment,null,navOptions);
                     }
 
                     @Override

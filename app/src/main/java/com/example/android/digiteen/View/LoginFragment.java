@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
 import com.example.android.digiteen.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +37,7 @@ public class LoginFragment extends Fragment {
     private DatabaseReference ref;
     private NavController navController;
     private ProgressDialog progressDialog;
+//    private IconRoundCornerProgressBar iconRoundCornerProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +45,7 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
+        // iconRoundCornerProgressBar=view.findViewById(R.id.round_progressbar);
         memail = view.findViewById(R.id.email_id);
         mpassword = view.findViewById(R.id.password);
         Button mloginbtn = view.findViewById(R.id.login_btn);
@@ -65,7 +68,7 @@ public class LoginFragment extends Fragment {
                     mpassword.setError("Password is Required");
                     return;
                 }
-                progressDialog=new ProgressDialog(getContext());
+                progressDialog = new ProgressDialog(getContext());
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setMessage("Logging in please wait....");
                 progressDialog.show();
@@ -84,10 +87,8 @@ public class LoginFragment extends Fragment {
                                     assert ctgry != null;
                                     if (ctgry.equals("student")) {
                                         navController.navigate(R.id.action_loginFragment_to_studentLandingFragment, null, navOptions);
-                                    }
-                                    else
-                                    {
-                                        navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment,null,navOptions);
+                                    } else {
+                                        navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment, null, navOptions);
                                     }
 
                                 }
@@ -98,9 +99,7 @@ public class LoginFragment extends Fragment {
                                     Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }
-                        else
-                        {
+                        } else {
                             progressDialog.dismiss();
                             Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
                         }
@@ -119,9 +118,8 @@ public class LoginFragment extends Fragment {
     }
 
     public void checkUserLoggedIn() {
-        if (fAuth.getCurrentUser() != null)
-        {
-            progressDialog=new ProgressDialog(getContext());
+        if (fAuth.getCurrentUser() != null) {
+            progressDialog = new ProgressDialog(getContext());
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setMessage("Logging in please wait....");
             progressDialog.show();
@@ -135,10 +133,8 @@ public class LoginFragment extends Fragment {
                     assert ctgry != null;
                     if (ctgry.equals("student")) {
                         navController.navigate(R.id.action_loginFragment_to_studentLandingFragment, null, navOptions);
-                    }
-                    else
-                    {
-                        navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment,null,navOptions);
+                    } else {
+                        navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment, null, navOptions);
                     }
 
                 }
