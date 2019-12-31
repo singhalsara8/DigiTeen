@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -79,7 +80,7 @@ public class ApprovedOrderAdapter extends RecyclerView.Adapter<ApprovedOrderAdap
 
     public class ApprovedOrderViewHolder extends RecyclerView.ViewHolder {
         TextView approved_token, aprroved_total;
-        ImageButton approved_done;
+        ImageView approved_done;
         RelativeLayout relativeLayout;
 
         private ApprovedOrderViewHolder(View view) {

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -80,7 +81,7 @@ public class PaymentPendingAdapter extends RecyclerView.Adapter<PaymentPendingAd
 
     public class PaymentPendingViewHolder extends RecyclerView.ViewHolder {
         private TextView mtoken, mtotal;
-        private ImageButton mdone, mclear;
+        private ImageView mdone, mclear;
         private RelativeLayout relativeLayout;
 
         private PaymentPendingViewHolder(View view) {
