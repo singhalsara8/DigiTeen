@@ -43,6 +43,7 @@ public class StudentOrderListFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Fetching orders...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         StudentDataViewModel viewModel = ViewModelProviders.of(this).get(StudentDataViewModel.class);
         LiveData<DataSnapshot> liveData = viewModel.getdatasnapshotlivedata();

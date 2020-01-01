@@ -50,6 +50,7 @@ public class OrderDetailFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         token_number = getArguments().getString("token");
         token.setText(token_number);

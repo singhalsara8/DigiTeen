@@ -72,6 +72,7 @@ public class OwnerOrderDetailFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         token_number = getArguments().getString("tokenNumber");
         token.setText(token_number);

@@ -122,6 +122,7 @@ public class LoginFragment extends Fragment {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setMessage("Logging in please wait....");
+            progressDialog.setCancelable(false);
             progressDialog.show();
             DatabaseReference usr = ref.child("user").child(fAuth.getCurrentUser().getUid()).child("profile");
             usr.addListenerForSingleValueEvent(new ValueEventListener() {

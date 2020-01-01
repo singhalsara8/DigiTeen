@@ -67,6 +67,7 @@ public class PaymentPendingFragment extends Fragment {
         databaseReference= FirebaseDatabase.getInstance().getReference();
         progressDialog=new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
         DatabaseReference reference=databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");

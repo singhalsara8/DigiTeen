@@ -63,6 +63,7 @@ public class StudentchooseCanteenFragment extends Fragment {
         progressDialog=new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         BhawanDataViewModel viewModel= ViewModelProviders.of(this).get(BhawanDataViewModel.class);
         LiveData<DataSnapshot>liveData= viewModel.getdatasnapshotlivedata();

@@ -80,6 +80,7 @@ public class OwnerLandingFragment extends Fragment {
         });
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         order.setOnClickListener(new View.OnClickListener() {
             @Override

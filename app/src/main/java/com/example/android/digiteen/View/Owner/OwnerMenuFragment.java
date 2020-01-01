@@ -1,10 +1,13 @@
 package com.example.android.digiteen.View.Owner;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,13 +22,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-
 import com.example.android.digiteen.Adapter.OwnerMenuAdapter;
 import com.example.android.digiteen.Model.OwnerMenu;
 import com.example.android.digiteen.R;
@@ -39,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +48,7 @@ public class OwnerMenuFragment extends Fragment {
     private OwnerMenuAdapter adapter;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference, reference;
+    private StorageReference storageReference;
     private String ownerbhawan;
     private ProgressDialog progressDialog;
     private NavController navController;
@@ -85,6 +83,7 @@ public class OwnerMenuFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Loading");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         BhawanDataViewModel bhawanDataViewModel = ViewModelProviders.of(getActivity()).get(BhawanDataViewModel.class);
         final LiveData<DataSnapshot> liveData = bhawanDataViewModel.getdatasnapshotlivedata();
