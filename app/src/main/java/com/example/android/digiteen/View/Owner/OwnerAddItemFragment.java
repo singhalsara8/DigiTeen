@@ -84,8 +84,7 @@ public class OwnerAddItemFragment extends Fragment {
             public void onClick(View view) {
                 if (itemname.getText().toString().isEmpty()) {
                     Toast.makeText(getContext(), "Field Name cannot be empty", Toast.LENGTH_SHORT).show();
-                }
-                else if (itemprice.getText().toString().isEmpty()) {
+                } else if (itemprice.getText().toString().isEmpty()) {
                     Toast.makeText(getContext(), "Field price cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
                     progressDialog = new ProgressDialog(getContext());
@@ -141,9 +140,20 @@ public class OwnerAddItemFragment extends Fragment {
 
     private void UploadImage() {
         if (selectimage != null) {
-            String value = itemname.getText().toString();
-            StorageReference storageReference1 = storageReference.child(value + "/" + UUID.randomUUID().toString());
-            storageReference1.putFile(selectimage);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String bhawan = dataSnapshot.getValue().toString();
+                    String value = itemname.getText().toString();
+                    StorageReference storageReference1 = storageReference.child(bhawan).child(value + "/" + UUID.randomUUID().toString());
+                    storageReference1.putFile(selectimage);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 }
