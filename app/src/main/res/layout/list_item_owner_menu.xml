@@ -25,6 +25,16 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/owner_fetch_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toEndOf="@id/owner_menu_itemname"
+            android:layout_marginStart="150dp"
+            android:layout_marginEnd="280dp"/>
+
+
         <TextView
             android:id="@+id/owner_menu_itemprice"
             android:layout_width="wrap_content"
@@ -37,22 +47,4 @@
             android:textAlignment="center"
             android:textSize="18sp" />
     </RelativeLayout>
-    <!--    <ImageButton-->
-    <!--        android:id="@+id/owner_clear_menuitem"-->
-    <!--        android:layout_width="30dp"-->
-    <!--        android:layout_height="30dp"-->
-    <!--        android:layout_alignParentEnd="true"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:layout_marginEnd="80dp"-->
-    <!--        android:src="@drawable/baseline_clear_black_24dp"-->
-    <!--        android:layout_marginBottom="10dp"-->
-    <!--        android:textSize="20sp"/>-->
-    <!--    <View-->
-    <!--        android:id="@+id/view"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="1dp"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:layout_marginBottom="8dp"-->
-    <!--        android:background="#C2C2C2" />-->
 </androidx.cardview.widget.CardView>

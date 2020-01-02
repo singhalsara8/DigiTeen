@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class OwnerMenuFragment extends Fragment {
     private OwnerMenuAdapter adapter;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference, reference;
-    private StorageReference storageReference;
+    private StorageReference storageReference,storageReference1;
     private String ownerbhawan;
     private ProgressDialog progressDialog;
     private NavController navController;
@@ -78,6 +79,8 @@ public class OwnerMenuFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         reference = FirebaseDatabase.getInstance().getReference();
+        storageReference= FirebaseStorage.getInstance().getReference();
+        storageReference1=FirebaseStorage.getInstance().getReference();
         button = view.findViewById(R.id.owner_add_item_button);
         recyclerView = view.findViewById(R.id.owner_menu_recyclerView);
         progressDialog = new ProgressDialog(getContext());
@@ -130,9 +133,9 @@ public class OwnerMenuFragment extends Fragment {
         SwipeToDelete swipeToDelete=new SwipeToDelete(getContext()) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-               final int position=viewHolder.getAdapterPosition();
-               final OwnerMenu item=adapter.getList().get(position);
-               adapter.removeItem(position);
+                final int position=viewHolder.getAdapterPosition();
+                final OwnerMenu item=adapter.getList().get(position);
+                adapter.removeItem(position);
 
                 Snackbar snackbar=Snackbar.make(coordinatorLayout,"Item was removed from the list.", BaseTransientBottomBar.LENGTH_LONG);
                 snackbar.setAction("UNDO", new View.OnClickListener() {

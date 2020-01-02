@@ -145,7 +145,7 @@ public class OwnerAddItemFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String bhawan = dataSnapshot.getValue().toString();
                     String value = itemname.getText().toString();
-                    StorageReference storageReference1 = storageReference.child(bhawan).child(value + "/" + UUID.randomUUID().toString());
+                    StorageReference storageReference1 = storageReference.child(bhawan).child(value);
                     storageReference1.putFile(selectimage);
                 }
 
