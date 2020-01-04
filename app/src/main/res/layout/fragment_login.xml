@@ -77,24 +77,6 @@
             android:text="@string/not_having_account_sign_up"
             android:textColor="@color/colorAccent"
             android:textSize="15sp"/>
-
-<!--        <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar-->
-<!--            android:layout_width="250dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="10dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            app:rcBackgroundColor="@color/white"-->
-<!--            app:rcBackgroundPadding="2dp"-->
-<!--            app:rcIconBackgroundColor="@color/colorPrimaryDark"-->
-<!--            app:rcIconPadding="5dp"-->
-<!--            app:rcIconSize="40dp"-->
-<!--            app:rcIconSrc="@drawable/login"-->
-<!--            app:rcMax="150"-->
-<!--            app:rcProgress="90"-->
-<!--            app:rcProgressColor="@color/colorPrimary"-->
-<!--            app:rcRadius="5dp"-->
-<!--            android:id="@+id/round_progressbar"/>-->
-
     </LinearLayout>
 
 </ScrollView>

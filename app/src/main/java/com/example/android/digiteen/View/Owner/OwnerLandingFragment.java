@@ -1,6 +1,7 @@
 package com.example.android.digiteen.View.Owner;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -67,9 +69,24 @@ public class OwnerLandingFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fauth.signOut();
-                NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerLandingFragment, true).build();
-                navController.navigate(R.id.action_ownerLandingFragment_to_loginFragment2, null, navOptions);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Do you want to logout?");
+                builder.setTitle("CONFIRMATION");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        fauth.signOut();
+                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerLandingFragment, true).build();
+                        navController.navigate(R.id.action_ownerLandingFragment_to_loginFragment2, null, navOptions);
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
             }
         });
         menu.setOnClickListener(new View.OnClickListener() {

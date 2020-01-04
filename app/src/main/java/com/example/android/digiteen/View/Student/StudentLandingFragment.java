@@ -1,5 +1,6 @@
 package com.example.android.digiteen.View.Student;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -42,17 +44,32 @@ public class StudentLandingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        placeorder=view.findViewById(R.id.new_order);
-        myorder=view.findViewById(R.id.my_orders);
-        logout=view.findViewById(R.id.logout);
-        fauth=FirebaseAuth.getInstance();
-        navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
+        placeorder = view.findViewById(R.id.new_order);
+        myorder = view.findViewById(R.id.my_orders);
+        logout = view.findViewById(R.id.logout);
+        fauth = FirebaseAuth.getInstance();
+        navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fauth.signOut();
-                NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.studentLandingFragment, true).build();
-                navController.navigate(R.id.action_studentLandingFragment_to_loginFragment,null,navOptions);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Do you want to logout?");
+                builder.setTitle("CONFIRMATION");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        fauth.signOut();
+                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.studentLandingFragment, true).build();
+                        navController.navigate(R.id.action_studentLandingFragment_to_loginFragment, null, navOptions);
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
             }
         });
         placeorder.setOnClickListener(new View.OnClickListener() {
