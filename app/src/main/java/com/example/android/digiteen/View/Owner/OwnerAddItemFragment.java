@@ -95,10 +95,31 @@ public class OwnerAddItemFragment extends Fragment {
                             ownerbhawan = dataSnapshot.getValue(String.class);
                             Log.d("bhawan", ownerbhawan);
                             databaseReference.child("bhawan").child(ownerbhawan).child("Menu").child(itemname.getText().toString()).setValue(Integer.parseInt(itemprice.getText().toString()));
-                            UploadImage();
-                            progressDialog.dismiss();
-                            NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerMenuFragment, true).build();
-                            navController.navigate(R.id.action_ownerAddItemFragment_to_ownerMenuFragment, null, navOptions);
+                            if (selectimage != null) {
+                                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String bhawan = dataSnapshot.getValue().toString();
+                                        String value = itemname.getText().toString();
+                                        StorageReference storageReference1 = storageReference.child(bhawan).child(value);
+                                        storageReference1.putFile(selectimage);
+                                        progressDialog.dismiss();
+                                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerMenuFragment, true).build();
+                                        navController.navigate(R.id.action_ownerAddItemFragment_to_ownerMenuFragment, null, navOptions);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Toast.makeText(getContext(), "Could not upload image", Toast.LENGTH_SHORT).show();
+                                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerMenuFragment, true).build();
+                                        navController.navigate(R.id.action_ownerAddItemFragment_to_ownerMenuFragment, null, navOptions);
+                                    }
+                                });
+                            } else {
+                                progressDialog.dismiss();
+                                NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.ownerMenuFragment, true).build();
+                                navController.navigate(R.id.action_ownerAddItemFragment_to_ownerMenuFragment, null, navOptions);
+                            }
                         }
 
                         @Override
@@ -131,25 +152,6 @@ public class OwnerAddItemFragment extends Fragment {
                 selectimage = data.getData();
                 imageView.setImageURI(selectimage);
             }
-        }
-    }
-
-    private void UploadImage() {
-        if (selectimage != null) {
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String bhawan = dataSnapshot.getValue().toString();
-                    String value = itemname.getText().toString();
-                    StorageReference storageReference1 = storageReference.child(bhawan).child(value);
-                    storageReference1.putFile(selectimage);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
         }
     }
 }
