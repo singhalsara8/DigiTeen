@@ -31,8 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.UUID;
-
 import static android.app.Activity.RESULT_OK;
 
 
@@ -45,7 +43,6 @@ public class OwnerAddItemFragment extends Fragment {
     private NavController navController;
     private ImageView imageView;
     private StorageReference storageReference, storageReference1;
-    private Button choosepic;
     Uri selectimage;
     private ProgressDialog progressDialog;
 
@@ -68,8 +65,7 @@ public class OwnerAddItemFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        imageView = view.findViewById(R.id.imgvw);
-        choosepic = view.findViewById(R.id.owner_choose_item_button);
+        imageView = view.findViewById(R.id.owner_choose_item_button);
         itemname = view.findViewById(R.id.owner_itemname);
         itemprice = view.findViewById(R.id.owner_itemprice);
         button = view.findViewById(R.id.owner_upload_item_button);
@@ -114,7 +110,7 @@ public class OwnerAddItemFragment extends Fragment {
             }
         });
 
-        choosepic.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SelectImage();
