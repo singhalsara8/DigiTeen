@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.android.digiteen.Model.OwnerMenu;
 import com.example.android.digiteen.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +51,14 @@ public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.Owne
         holder.itemname.setText(ownerMenu.getItemname());
         holder.itemprice.setText(ownerMenu.getItemprice()+"₹");
         //Glide.with(context).load(ownerMenu.getUri()).into(holder.imageView);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.buffet_516348);
+        requestOptions.error(R.drawable.buffet_516348);
+        Glide
+            .with(context)
+            .load(ownerMenu.getUri())
+            .apply(requestOptions)
+            .into(holder.imageView);
         //holder.imageView.setImageURI();
     }
 

@@ -2,6 +2,7 @@ package com.example.android.digiteen.View.Owner;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import com.example.android.digiteen.Model.OwnerMenu;
 import com.example.android.digiteen.R;
 import com.example.android.digiteen.SwipeToDelete;
 import com.example.android.digiteen.ViewModel.BhawanDataViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,9 +41,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.security.acl.Owner;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class OwnerMenuFragment extends Fragment {
     private RecyclerView recyclerView;
@@ -49,16 +52,15 @@ public class OwnerMenuFragment extends Fragment {
     private OwnerMenuAdapter adapter;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference, reference;
-    private StorageReference storageReference,storageReference1;
     private String ownerbhawan;
     private ProgressDialog progressDialog;
     private NavController navController;
     private CoordinatorLayout coordinatorLayout;
+    private StorageReference storageReference, storageReference1;
 
     public OwnerMenuFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,14 +76,13 @@ public class OwnerMenuFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        coordinatorLayout=view.findViewById(R.id.ownerMenuCoordinatorLayout);
-        navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
+        coordinatorLayout = view.findViewById(R.id.ownerMenuCoordinatorLayout);
+        navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         reference = FirebaseDatabase.getInstance().getReference();
-        storageReference= FirebaseStorage.getInstance().getReference();
-        storageReference1=FirebaseStorage.getInstance().getReference();
         button = view.findViewById(R.id.owner_add_item_button);
+        storageReference = FirebaseStorage.getInstance().getReference();
         recyclerView = view.findViewById(R.id.owner_menu_recyclerView);
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -95,18 +96,42 @@ public class OwnerMenuFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ownerbhawan = dataSnapshot.getValue(String.class);
+                storageReference1 = storageReference.child(ownerbhawan);
                 liveData.observe(getViewLifecycleOwner(), new Observer<DataSnapshot>() {
                     @Override
                     public void onChanged(DataSnapshot datasnapshot) {
                         ownerMenus = new ArrayList<>();
                         adapter = new OwnerMenuAdapter(ownerMenus, getContext());
+                        //Log.d("uri_check_before",storageReference1.child("tea").getDownloadUrl().toString());
                         DataSnapshot dataSnapshot1 = datasnapshot.child(ownerbhawan).child("Menu");
-                        for (DataSnapshot readData : dataSnapshot1.getChildren()) {
-                            ownerMenus.add(new OwnerMenu(readData.getKey(), Integer.parseInt(readData.getValue().toString())));
+                        for (final DataSnapshot readData : dataSnapshot1.getChildren()) {
+                            final String itemname = readData.getKey();
+                            final OwnerMenu menuItem = new OwnerMenu(itemname, Integer.parseInt(readData.getValue().toString()));
+//                            String uri=storageReference1.child("default.jpeg").getDownloadUrl().toString();
+//                            Log.d("uri_check",uri);
+                            storageReference1.child(itemname).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    // String url=storageReference1.child(itemname+".jpeg").getDownloadUrl().toString();
+//                                    Log.d("uri_check",url);
+                                    menuItem.setUri(uri.toString());
+                                    Log.d("Image", itemname + "\t" + uri.toString());
+                                    adapter.notifyDataSetChanged();
+                                    progressDialog.dismiss();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("Image", itemname + "\t" + e.getMessage());
+                                    progressDialog.dismiss();
+                                }
+                            });
+                            ownerMenus.add(menuItem);
                             adapter.notifyDataSetChanged();
-                            Log.d("check", ownerMenus.toString());
+//                            ownerMenus.add(new OwnerMenu(itemname, Integer.parseInt(readData.getValue().toString()),storageReference1.child(itemname).getDownloadUrl().toString()));
+//                            adapter.notifyDataSetChanged();
+                            // Log.d("check", ownerMenus.toString());
                         }
-                        progressDialog.dismiss();
                         enableSwipeToDelete();
                         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                         recyclerView.setLayoutManager(linearLayoutManager);
@@ -117,7 +142,6 @@ public class OwnerMenuFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
@@ -126,18 +150,16 @@ public class OwnerMenuFragment extends Fragment {
                 navController.navigate(R.id.action_ownerMenuFragment_to_ownerAddItemFragment);
             }
         });
-
     }
 
-    private void enableSwipeToDelete(){
-        SwipeToDelete swipeToDelete=new SwipeToDelete(getContext()) {
+    private void enableSwipeToDelete() {
+        SwipeToDelete swipeToDelete = new SwipeToDelete(getContext()) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                final int position=viewHolder.getAdapterPosition();
-                final OwnerMenu item=adapter.getList().get(position);
+                final int position = viewHolder.getAdapterPosition();
+                final OwnerMenu item = adapter.getList().get(position);
                 adapter.removeItem(position);
-
-                Snackbar snackbar=Snackbar.make(coordinatorLayout,"Item was removed from the list.", BaseTransientBottomBar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(coordinatorLayout, "Item was removed from the list.", BaseTransientBottomBar.LENGTH_LONG);
                 snackbar.setAction("UNDO", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -148,7 +170,7 @@ public class OwnerMenuFragment extends Fragment {
                 snackbar.show();
             }
         };
-        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(swipeToDelete);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToDelete);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 }
