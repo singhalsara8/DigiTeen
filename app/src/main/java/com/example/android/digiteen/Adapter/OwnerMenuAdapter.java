@@ -50,7 +50,6 @@ public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.Owne
         final OwnerMenu ownerMenu = ownerMenus.get(position);
         holder.itemname.setText(ownerMenu.getItemname());
         holder.itemprice.setText(ownerMenu.getItemprice()+"₹");
-        //Glide.with(context).load(ownerMenu.getUri()).into(holder.imageView);
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.buffet_516348);
         requestOptions.error(R.drawable.buffet_516348);

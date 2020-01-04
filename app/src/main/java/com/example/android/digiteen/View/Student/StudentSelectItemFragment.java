@@ -2,6 +2,7 @@ package com.example.android.digiteen.View.Student;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,10 +29,14 @@ import com.example.android.digiteen.Model.SelectMenu;
 import com.example.android.digiteen.Model.Total;
 import com.example.android.digiteen.R;
 import com.example.android.digiteen.ViewModel.BhawanDataViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +58,7 @@ public class StudentSelectItemFragment extends Fragment {
     private List<MenuItem> menuItems;
     private String token;
     private Bundle bundle;
-//    private ConnectivityManager cm;
+    private StorageReference storageReference,storageReference1;
 
 
     public StudentSelectItemFragment() {
@@ -76,12 +81,12 @@ public class StudentSelectItemFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        cm= (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         bundle = new Bundle();
         selectMenus = new ArrayList<>();
         menuItems = new ArrayList<>();
         firebaseAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference();
+        storageReference= FirebaseStorage.getInstance().getReference();
         bttn = view.findViewById(R.id.place_order);
         navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
         bhawan = getArguments().getString("list");
@@ -92,6 +97,7 @@ public class StudentSelectItemFragment extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+        storageReference1=storageReference.child(bhawan);
         BhawanDataViewModel viewModel = ViewModelProviders.of(this).get(BhawanDataViewModel.class);
         LiveData<DataSnapshot> liveData = viewModel.getdatasnapshotlivedata();
         liveData.observe(this, new Observer<DataSnapshot>() {
@@ -103,12 +109,25 @@ public class StudentSelectItemFragment extends Fragment {
                     for (DataSnapshot readData : dataSnapshot.child(bhawan).child("Menu").getChildren()) {
                         Log.d("debug", readData.getValue().toString());
                         int price = Integer.parseInt(readData.getValue().toString());
-                        MenuItem menuItem = new MenuItem(readData.getKey(), 0, 0, price);
+                        final MenuItem menuItem = new MenuItem(readData.getKey(), 0, 0, price);
                         SelectMenu selectMenu = new SelectMenu(SelectMenu.MENU_TYPE, menuItem);
+                        storageReference1.child(readData.getKey()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                menuItem.setUrl(uri.toString());
+                                menuAdapter.notifyDataSetChanged();
+                                progressDialog.dismiss();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                              Log.d("image_failure",e.getMessage());
+                              progressDialog.dismiss();
+                            }
+                        });
                         list.add(selectMenu);
                         menuAdapter.notifyDataSetChanged();
                     }
-                    progressDialog.dismiss();
                     total = new Total(0);
                     SelectMenu selectMenu1 = new SelectMenu(SelectMenu.TOTAL_TYPE, total);
                     list.add(selectMenu1);

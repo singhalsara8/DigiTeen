@@ -3,7 +3,7 @@ package com.example.android.digiteen.Model;
 public class OwnerMenu {
     private String itemname;
     private int itemprice;
-    private String uri = "";
+    private String uri;
 
     public OwnerMenu(String itemname, int itemprice) {
         this.itemname = itemname;

@@ -102,18 +102,13 @@ public class OwnerMenuFragment extends Fragment {
                     public void onChanged(DataSnapshot datasnapshot) {
                         ownerMenus = new ArrayList<>();
                         adapter = new OwnerMenuAdapter(ownerMenus, getContext());
-                        //Log.d("uri_check_before",storageReference1.child("tea").getDownloadUrl().toString());
                         DataSnapshot dataSnapshot1 = datasnapshot.child(ownerbhawan).child("Menu");
                         for (final DataSnapshot readData : dataSnapshot1.getChildren()) {
                             final String itemname = readData.getKey();
                             final OwnerMenu menuItem = new OwnerMenu(itemname, Integer.parseInt(readData.getValue().toString()));
-//                            String uri=storageReference1.child("default.jpeg").getDownloadUrl().toString();
-//                            Log.d("uri_check",uri);
                             storageReference1.child(itemname).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    // String url=storageReference1.child(itemname+".jpeg").getDownloadUrl().toString();
-//                                    Log.d("uri_check",url);
                                     menuItem.setUri(uri.toString());
                                     Log.d("Image", itemname + "\t" + uri.toString());
                                     adapter.notifyDataSetChanged();
@@ -128,9 +123,6 @@ public class OwnerMenuFragment extends Fragment {
                             });
                             ownerMenus.add(menuItem);
                             adapter.notifyDataSetChanged();
-//                            ownerMenus.add(new OwnerMenu(itemname, Integer.parseInt(readData.getValue().toString()),storageReference1.child(itemname).getDownloadUrl().toString()));
-//                            adapter.notifyDataSetChanged();
-                            // Log.d("check", ownerMenus.toString());
                         }
                         enableSwipeToDelete();
                         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
