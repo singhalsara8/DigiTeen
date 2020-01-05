@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.android.digiteen.Model.SelectMenu;
 import com.example.android.digiteen.R;
 
@@ -55,6 +58,14 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((MenuItemViewHolder) holder).amount.setText(menu.getMenuItem().getMamount()+"₹");
                 ((MenuItemViewHolder) holder).subtotal.setText(menu.getMenuItem().getMsubtotal()+"₹");
                 ((MenuItemViewHolder) holder).number.setText(String.valueOf(menu.getMenuItem().getMnumber()));
+                RequestOptions requestOptions=new RequestOptions();
+                requestOptions.placeholder(R.drawable.buffet_516348);
+                requestOptions.error(R.drawable.buffet_516348);
+                Glide
+                        .with(context)
+                        .load(menu.getMenuItem().getUrl())
+                        .apply(requestOptions)
+                        .into(((MenuItemViewHolder) holder).imageView);
             } else if (menu.getType() == SelectMenu.TOTAL_TYPE) {
                 ((GrandTotalViewHolder) holder).totalValue.setText(menu.getTotal().getMtotalvalue()+"₹");
             }
@@ -82,9 +93,11 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView item, amount, subtotal;
         private EditText number;
         private Button increment, decrement;
+        private ImageView imageView;
 
         private MenuItemViewHolder(View view) {
             super(view);
+            imageView=view.findViewById(R.id.student_item_image);
             item = view.findViewById(R.id.item);
             amount = view.findViewById(R.id.amount);
             subtotal = view.findViewById(R.id.subtotal);

@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rnd_bttn"
         android:layout_margin="20dp"
-        android:text="signout"
+        android:text="@string/signout"
         android:textStyle="bold"
         android:textSize="18sp"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.android.digiteen.View.Student;
+package com.example.android.digiteen.View;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -50,6 +50,7 @@ public class OrderDetailFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
         token_number = getArguments().getString("token");
         token.setText(token_number);
@@ -61,10 +62,10 @@ public class OrderDetailFragment extends Fragment {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
+                    Log.d("debug",token_number);
                     Log.d("status", dataSnapshot.child(token_number).child("status").getValue().toString());
                     summary.setText(dataSnapshot.child(token_number).child("status").getValue().toString());
-                    if (dataSnapshot.child(token_number).child("status").getValue().toString().equals("Payment Pending") ||
-                            dataSnapshot.child(token_number).child("status").getValue().toString().equals("Declined"))
+                    if (dataSnapshot.child(token_number).child("status").getValue().toString().equals("Payment Pending")||dataSnapshot.child(token_number).child("status").getValue().toString().equals("Declined"))
                         summary.setTextColor(getActivity().getColor(R.color.colorPrimary));
                     else summary.setTextColor(getActivity().getColor(R.color.colorAccent));
                     List<OrderSummary> list = new ArrayList<>();

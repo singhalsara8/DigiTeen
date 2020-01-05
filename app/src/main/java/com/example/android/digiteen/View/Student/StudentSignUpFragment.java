@@ -94,6 +94,7 @@ public class StudentSignUpFragment extends Fragment {
                 } else {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.setMessage("Registering please wait....");
+                    progressDialog.setCancelable(false);
                     progressDialog.show();
                     fauth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override

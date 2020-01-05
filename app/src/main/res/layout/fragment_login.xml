@@ -77,8 +77,6 @@
             android:text="@string/not_having_account_sign_up"
             android:textColor="@color/colorAccent"
             android:textSize="15sp"/>
-
-
     </LinearLayout>
 
 </ScrollView>
