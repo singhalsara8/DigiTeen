@@ -20,6 +20,8 @@ import com.example.android.digiteen.R;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
@@ -93,7 +95,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView item, amount, subtotal;
         private EditText number;
         private Button increment, decrement;
-        private ImageView imageView;
+        private CircleImageView imageView;
 
         private MenuItemViewHolder(View view) {
             super(view);

@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.OwnerMenuViewHolder> {
     private List<OwnerMenu> ownerMenus;
     private Context context;
@@ -113,7 +115,7 @@ public class OwnerMenuAdapter extends RecyclerView.Adapter<OwnerMenuAdapter.Owne
 
     public class OwnerMenuViewHolder extends RecyclerView.ViewHolder {
         private TextView itemname, itemprice;
-        private ImageView imageView;
+        private CircleImageView imageView;
 
         private OwnerMenuViewHolder(View view) {
             super(view);
