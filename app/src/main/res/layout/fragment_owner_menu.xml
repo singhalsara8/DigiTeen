@@ -25,14 +25,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="20dp"
-                android:text="(Swipe left to delete item)"
+                android:text="@string/swipe_left_to_delete_item"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/owner_menu_recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1" />
         <Button
             android:id="@+id/owner_add_item_button"
