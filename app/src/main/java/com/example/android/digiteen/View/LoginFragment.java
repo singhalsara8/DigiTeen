@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
 import com.example.android.digiteen.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,15 +36,12 @@ public class LoginFragment extends Fragment {
     private DatabaseReference ref;
     private NavController navController;
     private ProgressDialog progressDialog;
-//    private IconRoundCornerProgressBar iconRoundCornerProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
-
-        // iconRoundCornerProgressBar=view.findViewById(R.id.round_progressbar);
         memail = view.findViewById(R.id.email_id);
         mpassword = view.findViewById(R.id.password);
         Button mloginbtn = view.findViewById(R.id.login_btn);
@@ -54,13 +50,11 @@ public class LoginFragment extends Fragment {
         ref = FirebaseDatabase.getInstance().getReference();
         navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
         checkUserLoggedIn();
-
         mloginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = memail.getText().toString().trim();
                 String password = mpassword.getText().toString().trim();
-
                 if (TextUtils.isEmpty(email)) {
                     memail.setError("Email is Required");
                     return;
@@ -71,35 +65,38 @@ public class LoginFragment extends Fragment {
                 progressDialog = new ProgressDialog(getContext());
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setMessage("Logging in please wait....");
-                progressDialog.setCancelable(false);
                 progressDialog.show();
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getContext(), "login successful", Toast.LENGTH_SHORT).show();
-                            DatabaseReference usr = ref.child("user").child(fAuth.getCurrentUser().getUid()).child("profile");
-                            usr.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    String ctgry = dataSnapshot.child("category").getValue(String.class);
-                                    NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
-                                    assert ctgry != null;
-                                    if (ctgry.equals("student")) {
-                                        navController.navigate(R.id.action_loginFragment_to_studentLandingFragment, null, navOptions);
-                                    } else {
-                                        navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment, null, navOptions);
+                            if (fAuth.getCurrentUser().isEmailVerified()) {
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(), "login successful", Toast.LENGTH_SHORT).show();
+                                DatabaseReference usr = ref.child("user").child(fAuth.getCurrentUser().getUid()).child("profile");
+                                usr.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String ctgry = dataSnapshot.child("category").getValue(String.class);
+                                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
+                                        assert ctgry != null;
+                                        if (ctgry.equals("student")) {
+                                            navController.navigate(R.id.action_loginFragment_to_studentLandingFragment, null, navOptions);
+                                        } else {
+                                            navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment, null, navOptions);
+                                        }
                                     }
 
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    fAuth.signOut();
-                                    Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        fAuth.signOut();
+                                        Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(), "Please verify your email address.", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             progressDialog.dismiss();
                             Toast.makeText(getContext(), "Login unsuccessful", Toast.LENGTH_SHORT).show();
@@ -114,16 +111,14 @@ public class LoginFragment extends Fragment {
                 navController.navigate(R.id.action_loginFragment_to_signUpFragment);
             }
         });
-
         return view;
     }
 
     public void checkUserLoggedIn() {
-        if (fAuth.getCurrentUser() != null) {
+        if (fAuth.getCurrentUser() != null && fAuth.getCurrentUser().isEmailVerified()) {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setMessage("Logging in please wait....");
-            progressDialog.setCancelable(false);
             progressDialog.show();
             DatabaseReference usr = ref.child("user").child(fAuth.getCurrentUser().getUid()).child("profile");
             usr.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -138,7 +133,6 @@ public class LoginFragment extends Fragment {
                     } else {
                         navController.navigate(R.id.action_loginFragment_to_ownerLandingFragment, null, navOptions);
                     }
-
                 }
 
                 @Override
@@ -151,4 +145,3 @@ public class LoginFragment extends Fragment {
         }
     }
 }
-

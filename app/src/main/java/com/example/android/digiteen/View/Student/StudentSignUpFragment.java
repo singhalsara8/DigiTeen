@@ -27,9 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 public class StudentSignUpFragment extends Fragment {
-
     private EditText mStudentName, mStudentEnroll, mStudentHostel, mStudentNumber, mStudentemail, mStudentPassword;
     private Button mStudentRegister;
     private FirebaseAuth fauth;
@@ -37,11 +35,9 @@ public class StudentSignUpFragment extends Fragment {
     private NavController navController;
     private DatabaseReference ref;
 
-
     public StudentSignUpFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,11 +60,10 @@ public class StudentSignUpFragment extends Fragment {
         mStudentemail = view.findViewById(R.id.student_email);
         mStudentPassword = view.findViewById(R.id.student_password);
         mStudentRegister = view.findViewById(R.id.student_register);
-        progressDialog=new ProgressDialog(getContext());
+        progressDialog = new ProgressDialog(getContext());
         fauth = FirebaseAuth.getInstance();
         ref = FirebaseDatabase.getInstance().getReference();
         navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
-
         mStudentRegister.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -94,35 +89,39 @@ public class StudentSignUpFragment extends Fragment {
                 } else {
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.setMessage("Registering please wait....");
-                    progressDialog.setCancelable(false);
                     progressDialog.show();
                     fauth.createUserWithEmailAndPassword(emailid, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                fauth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            progressDialog.dismiss();
+                                            DatabaseReference usref = ref.child("user").child(fauth.getCurrentUser().getUid());
+                                            usref.child("profile").child("name").setValue(name);
+                                            usref.child("profile").child("enrollment").setValue(enroll);
+                                            usref.child("profile").child("hostel").setValue(hostel);
+                                            usref.child("profile").child("number").setValue(number);
+                                            usref.child("profile").child("emailid").setValue(emailid);
+                                            usref.child("profile").child("category").setValue("student");
+                                            Toast.makeText(getContext(), "Registered successfully. Please check your email for verification", Toast.LENGTH_SHORT).show();
+                                            navController.navigateUp();
+                                        } else {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            } else {
                                 progressDialog.dismiss();
-                                DatabaseReference usref = ref.child("user").child(fauth.getCurrentUser().getUid());
-                                usref.child("profile").child("name").setValue(name);
-                                usref.child("profile").child("enrollment").setValue(enroll);
-                                usref.child("profile").child("hostel").setValue(hostel);
-                                usref.child("profile").child("number").setValue(number);
-                                usref.child("profile").child("emailid").setValue(emailid);
-                                usref.child("profile").child("category").setValue("student");
-                                Toast.makeText(getContext(),"Registration successful",Toast.LENGTH_SHORT).show();
-                                NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
-                                navController.navigate(R.id.action_signUpFragment_to_studentLandingFragment, null, navOptions);
-
-                            }
-                            else
-                            {
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(),"Registration unsuccessful",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Registration unsuccessful", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }
             }
-    });
-
-}
+        });
+    }
 }
