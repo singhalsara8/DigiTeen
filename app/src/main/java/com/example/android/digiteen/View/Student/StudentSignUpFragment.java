@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.example.android.digiteen.R;
@@ -106,8 +107,7 @@ public class StudentSignUpFragment extends Fragment {
                                             usref.child("profile").child("emailid").setValue(emailid);
                                             usref.child("profile").child("category").setValue("student");
                                             Toast.makeText(getContext(), "Registered successfully. Please check your email for verification", Toast.LENGTH_SHORT).show();
-                                            // NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
-                                            navController.navigate(R.id.action_signUpFragment_to_loginFragment2);
+                                            navController.navigateUp();
                                         } else {
                                             progressDialog.dismiss();
                                             Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();

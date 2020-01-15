@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         String ctgry = dataSnapshot.child("category").getValue(String.class);
-                                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.signUpFragment, true).build();
+                                        NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build();
                                         assert ctgry != null;
                                         if (ctgry.equals("student")) {
                                             navController.navigate(R.id.action_loginFragment_to_studentLandingFragment, null, navOptions);
