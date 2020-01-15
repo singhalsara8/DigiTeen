@@ -34,4 +34,5 @@
     <string name="signout">signout</string>
     <string name="add_item">ADD ITEM</string>
     <string name="upload_item">UPLOAD ITEM</string>
+    <string name="swipe_left_to_delete_item">(Swipe left to delete item)</string>
 </resources>

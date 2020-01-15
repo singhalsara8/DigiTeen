@@ -1,9 +1,9 @@
 package com.example.android.digiteen.View.Owner;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,11 +14,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.android.digiteen.Adapter.ApprovedOrderAdapter;
 import com.example.android.digiteen.Adapter.CompletedOrderAdapter;
 import com.example.android.digiteen.Model.PaymentPending;
 import com.example.android.digiteen.R;

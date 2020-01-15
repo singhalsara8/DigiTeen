@@ -15,35 +15,36 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/owner_fetch_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            card_view:civ_border_width="0.4dp"
             android:layout_alignParentStart="true"
             android:scaleType="centerCrop"
             android:layout_margin="10dp"/>
 
-        <TextView
-            android:id="@+id/owner_menu_itemname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/owner_fetch_image"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="18sp"/>
+                <TextView
+                    android:id="@+id/owner_menu_itemname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/owner_fetch_image"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/owner_menu_itemprice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:textAlignment="center"
-            android:textSize="18sp" />
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/owner_menu_itemprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>

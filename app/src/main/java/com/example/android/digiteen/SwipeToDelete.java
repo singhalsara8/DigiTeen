@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,7 @@ abstract public class SwipeToDelete extends ItemTouchHelper.Callback {
         }
 
         mbackground.setColor(backgroundColor);
+        Log.d("xcheck", String.valueOf(dX));
         mbackground.setBounds(view.getRight() + (int) dX, view.getTop(), view.getRight(), view.getBottom());
         mbackground.draw(c);
 
