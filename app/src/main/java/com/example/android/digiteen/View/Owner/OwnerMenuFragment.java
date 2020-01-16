@@ -93,7 +93,7 @@ public class OwnerMenuFragment extends Fragment {
         reference = databaseReference.child("user").child(firebaseAuth.getCurrentUser().getUid()).child("profile").child("bhawan");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 ownerbhawan = dataSnapshot.getValue(String.class);
                 storageReference1 = storageReference.child(ownerbhawan);
                 liveData.observe(getViewLifecycleOwner(), new Observer<DataSnapshot>() {
@@ -101,27 +101,31 @@ public class OwnerMenuFragment extends Fragment {
                     public void onChanged(DataSnapshot datasnapshot) {
                         ownerMenus = new ArrayList<>();
                         adapter = new OwnerMenuAdapter(ownerMenus, getContext());
-                        DataSnapshot dataSnapshot1 = datasnapshot.child(ownerbhawan).child("Menu");
-                        for (final DataSnapshot readData : dataSnapshot1.getChildren()) {
-                            final String itemname = readData.getKey();
-                            final OwnerMenu menuItem = new OwnerMenu(itemname, Integer.parseInt(readData.getValue().toString()));
-                            storageReference1.child(itemname).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    menuItem.setUri(uri.toString());
-                                    Log.d("Image", itemname + "\t" + uri.toString());
-                                    adapter.notifyDataSetChanged();
-                                    progressDialog.dismiss();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("Image", itemname + "\t" + e.getMessage());
-                                    progressDialog.dismiss();
-                                }
-                            });
-                            ownerMenus.add(menuItem);
-                            adapter.notifyDataSetChanged();
+                        if (datasnapshot.child(ownerbhawan).getValue() != null) {
+                            DataSnapshot dataSnapshot1 = datasnapshot.child(ownerbhawan).child("Menu");
+                            for (final DataSnapshot readData : dataSnapshot1.getChildren()) {
+                                final String itemname = readData.getKey();
+                                final OwnerMenu menuItem = new OwnerMenu(itemname, Integer.parseInt(readData.getValue().toString()));
+                                storageReference1.child(itemname).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        menuItem.setUri(uri.toString());
+                                        Log.d("Image", itemname + "\t" + uri.toString());
+                                        adapter.notifyDataSetChanged();
+                                        progressDialog.dismiss();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("Image", itemname + "\t" + e.getMessage());
+                                        progressDialog.dismiss();
+                                    }
+                                });
+                                ownerMenus.add(menuItem);
+                                adapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            progressDialog.dismiss();
                         }
                         enableSwipeToDelete();
                         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

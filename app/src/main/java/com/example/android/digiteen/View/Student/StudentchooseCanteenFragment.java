@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,31 +57,30 @@ public class StudentchooseCanteenFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        bttn=view.findViewById(R.id.submit);
-        bundle=new Bundle();
+        bttn = view.findViewById(R.id.submit);
+        bundle = new Bundle();
         radiobttn = view.findViewById(R.id.recyclerView);
-        navController= Navigation.findNavController(getActivity(),R.id.my_nav_host_fragment);
-        progressDialog=new ProgressDialog(getContext());
+        navController = Navigation.findNavController(getActivity(), R.id.my_nav_host_fragment);
+        progressDialog = new ProgressDialog(getContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        BhawanDataViewModel viewModel= ViewModelProviders.of(this).get(BhawanDataViewModel.class);
-        LiveData<DataSnapshot>liveData= viewModel.getdatasnapshotlivedata();
+        BhawanDataViewModel viewModel = ViewModelProviders.of(this).get(BhawanDataViewModel.class);
+        LiveData<DataSnapshot> liveData = viewModel.getdatasnapshotlivedata();
         liveData.observe(this, new Observer<DataSnapshot>() {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null)
-                {
-                    final List<String> list=new ArrayList<>();
-                    adapter=new RadioButtonAdapter(list,getContext());
-                    for(DataSnapshot readData: dataSnapshot.getChildren()){
+                if (dataSnapshot != null) {
+                    final List<String> list = new ArrayList<>();
+                    adapter = new RadioButtonAdapter(list, getContext());
+                    for (DataSnapshot readData : dataSnapshot.getChildren()) {
                         list.add(readData.getKey());
                         adapter.notifyDataSetChanged();
-                        Log.d("list",list.toString());
+                        Log.d("list", list.toString());
                     }
                     progressDialog.dismiss();
-                    RecyclerView.LayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+                    RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                     radiobttn.setLayoutManager(linearLayoutManager);
                     radiobttn.setAdapter(adapter);
                 }
@@ -89,9 +89,15 @@ public class StudentchooseCanteenFragment extends Fragment {
         bttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                s=adapter.getUserId();
-                bundle.putString("list",s);
-                navController.navigate(R.id.action_studentchooseCanteenFragment_to_studentSelectItemFragment,bundle);
+                if (adapter.getItemCount() != 0) {
+                    s = adapter.getUserId();
+                    bundle.putString("list", s);
+                    navController.navigate(R.id.action_studentchooseCanteenFragment_to_studentSelectItemFragment, bundle);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Nothing selected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
