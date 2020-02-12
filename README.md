@@ -10,4 +10,4 @@ Student password: mdgsoc19
 
 Owner id: digiteen.owner@gmail.com
 
-owner password: mdgsoc19
+Owner password: mdgsoc19
