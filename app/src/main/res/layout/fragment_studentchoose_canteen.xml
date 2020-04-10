@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".View.Student.StudentchooseCanteenFragment">
+    tools:context="in.ac.iitr.mdg.View.Student.StudentchooseCanteenFragment">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

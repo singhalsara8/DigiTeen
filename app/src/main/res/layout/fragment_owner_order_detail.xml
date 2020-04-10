@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".View.Owner.OwnerOrderDetailFragment">
+    tools:context="in.ac.iitr.mdg.View.Owner.OwnerOrderDetailFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".View.Owner.AcceptedOrderFragment">
+    tools:context="in.ac.iitr.mdg.View.Owner.AcceptedOrderFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/owner_approved_ordered_list_recyclerview"
