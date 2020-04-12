@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="in.ac.iitr.mdg.View.LoginFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/fragment_login">
         <action
@@ -22,12 +22,12 @@
     </fragment>
     <fragment
         android:id="@+id/studentSignUp"
-        android:name="in.ac.iitr.mdg.View.Student.StudentSignUpFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Student.StudentSignUpFragment"
         android:label="fragment_student_sign_up"
         tools:layout="@layout/fragment_student_sign_up" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="in.ac.iitr.mdg.View.SignUpFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -42,12 +42,12 @@
     </fragment>
     <fragment
         android:id="@+id/ownerSignUp"
-        android:name="in.ac.iitr.mdg.View.Owner.OwnerSignUpFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.OwnerSignUpFragment"
         android:label="fragment_owner_sign_up"
         tools:layout="@layout/fragment_owner_sign_up" />
     <fragment
         android:id="@+id/studentLandingFragment"
-        android:name="in.ac.iitr.mdg.View.Student.StudentLandingFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Student.StudentLandingFragment"
         android:label="fragment_student_landing"
         tools:layout="@layout/fragment_student_landing" >
         <action
@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerLandingFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.OwnerLandingFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.OwnerLandingFragment"
         android:label="fragment_owner_landing"
         tools:layout="@layout/fragment_owner_landing" >
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/studentchooseCanteenFragment"
-        android:name="in.ac.iitr.mdg.View.Student.StudentchooseCanteenFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Student.StudentchooseCanteenFragment"
         android:label="fragment_studentchoose_canteen"
         tools:layout="@layout/fragment_studentchoose_canteen" >
         <action
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/studentSelectItemFragment"
-        android:name="in.ac.iitr.mdg.View.Student.StudentSelectItemFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Student.StudentSelectItemFragment"
         android:label="fragment_student_select_item"
         tools:layout="@layout/fragment_student_select_item" >
         <action
@@ -95,12 +95,12 @@
     </fragment>
     <fragment
         android:id="@+id/orderDetailFragment"
-        android:name="in.ac.iitr.mdg.View.OrderDetailFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.OrderDetailFragment"
         android:label="fragment_order_detail"
         tools:layout="@layout/fragment_order_detail" />
     <fragment
         android:id="@+id/studentOrderListFragment"
-        android:name="in.ac.iitr.mdg.View.Student.StudentOrderListFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Student.StudentOrderListFragment"
         android:label="fragment_student_order_list"
         tools:layout="@layout/fragment_student_order_list" >
         <action
@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerOrderSummaryFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.OwnerOrderSummaryFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.OwnerOrderSummaryFragment"
         android:label="fragment_owner_order_summary"
         tools:layout="@layout/fragment_owner_order_summary" >
         <action
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerMenuFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.OwnerMenuFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.OwnerMenuFragment"
         android:label="fragment_owner_menu"
         tools:layout="@layout/fragment_owner_menu" >
         <action
@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerAddItemFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.OwnerAddItemFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.OwnerAddItemFragment"
         android:label="fragment_owner_add_item"
         tools:layout="@layout/fragment_owner_add_item" >
         <action
@@ -136,22 +136,22 @@
     </fragment>
     <fragment
         android:id="@+id/paymentPendingFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.PaymentPendingFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.PaymentPendingFragment"
         android:label="fragment_payment_pending"
         tools:layout="@layout/fragment_payment_pending" />
     <fragment
         android:id="@+id/acceptedOrderFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.AcceptedOrderFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.AcceptedOrderFragment"
         android:label="fragment_accepted_order"
         tools:layout="@layout/fragment_accepted_order" />
     <fragment
         android:id="@+id/completedOrderFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.CompletedOrderFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.CompletedOrderFragment"
         android:label="fragment_completed_order"
         tools:layout="@layout/fragment_completed_order" />
     <fragment
         android:id="@+id/ownerOrderDetailFragment"
-        android:name="in.ac.iitr.mdg.View.Owner.OwnerOrderDetailFragment"
+        android:name="in.ac.iitr.mdg.digiteen.View.Owner.OwnerOrderDetailFragment"
         android:label="fragment_owner_order_detail"
         tools:layout="@layout/fragment_owner_order_detail" />
 

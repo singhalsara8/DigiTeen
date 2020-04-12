@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="in.ac.iitr.mdg.View.Student.StudentSignUpFragment">
+    tools:context=".digiteen.View.Student.StudentSignUpFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

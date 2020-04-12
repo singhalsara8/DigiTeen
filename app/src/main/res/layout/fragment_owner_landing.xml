@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="in.ac.iitr.mdg.View.Owner.OwnerLandingFragment">
+    tools:context=".digiteen.View.Owner.OwnerLandingFragment">
 
     <Button
         android:layout_height="0dp"
